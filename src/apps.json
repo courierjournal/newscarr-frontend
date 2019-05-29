@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Contacts",
+    "path": "/contacts",
+    "component": "Contacts.vue",
+    "description": "A quick list of frequently used contacts",
+    "icon": "contacts.png"
+  },
+  {
+    "name": "Bookmarks",
+    "path": "/bookmarks",
+    "component": "Bookmarks.vue",
+    "description": "A quick list of frequently used websites",
+    "icon": "bookmarks.png"
+  },
+  {
+    "name": "Voter Registration Database",
+    "path": "/voterdb",
+    "component": "VoterRegistration.vue",
+    "description": "Lookup people in the voter registration file from the SoS",
+    "icon": "voter.png"
+  },
+  {
+    "name": "Homicide Database",
+    "path": "/homicides",
+    "component": "HomicideDatabase.vue",
+    "description": "Edit homicide database",
+    "icon": "homicides.png"
+  },
+  {
+    "name": "Gun Violence Database",
+    "path": "/gun-violence-database",
+    "component": "GunViolenceDatabase/index.vue",
+    "description": "Admin panel for the gun violence database",
+    "icon": "gunshot.png"
+  }
+]

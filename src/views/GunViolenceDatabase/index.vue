@@ -6,16 +6,29 @@
         <button>Create New</button>
         <input class="input-search" type="text" placeholder="Search">
       </div>
+      <ListView :list="incidents"/>
     </div>
   </div>
 </template>
 
 <script>
+import ListView from "./ListView";
+
 export default {
   name: "GunViolenceDatabase",
+  components: { ListView },
   data() {
     return {
-      incidents: [],
+      incidents: [
+        {
+          date: "1/1/10",
+          address: "123 Fake Street"
+        },
+        {
+          date: "2/2/11",
+          address: "456 Nowhere Pl"
+        }
+      ],
       suspects: [],
       victims: []
     };

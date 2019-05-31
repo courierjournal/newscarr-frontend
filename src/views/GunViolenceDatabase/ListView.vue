@@ -4,17 +4,15 @@
       <thead>
         <tr>
           <th>Incident Date</th>
-          <th>Address</th>
-          <th>Victim Count</th>
-          <th>Suspect Count</th>
+          <th>Location</th>
+          <th>Narrative</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in list" :key="index" @click="edit(index)">
-          <td>{{item.date}}</td>
+          <td>{{formatDate(index)}}</td>
           <td>{{item.address}}</td>
-          <td></td>
-          <td></td>
+          <td>{{formatNarrative(index)}}</td>
         </tr>
       </tbody>
     </table>
@@ -25,9 +23,24 @@
 export default {
   name: "ListView",
   props: { list: Array },
+  computed: {
+    
+  },
   methods: {
-    edit(index) {
+    formatDate(id) {
+      return this.list[id].date + " @ " + this.list[id].time;
+    },
+    formatNarrative(id) {
+      if (this.list[id].narrative.length > 50) {
+        return this.list[id].narrative.slice(0, 50) + "...";
+      }
+      return this.list[id].narrative;
+    },
+    editNarrative(index) {
       console.log(index);
+    },
+    newNarrative(){
+
     }
   }
 };
@@ -36,6 +49,7 @@ export default {
 <style scoped>
 .table-container {
   max-width: 960px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 50px;
 }

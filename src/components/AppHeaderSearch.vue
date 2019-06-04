@@ -1,8 +1,8 @@
 <template>
   <div class="header">
-    <h2 class="app-title">Gun Violence Database Admin</h2>
+    <h2 class="app-title">{{title}}</h2>
     <div>
-      <button class="btn">New Incident +</button>
+      <button class="btn">{{newButton}}</button>
       <input class="input-search" type="text" placeholder="Search">
     </div>
   </div>
@@ -10,7 +10,8 @@
 
 <script>
 export default {
-  name: "AppHeader"
+  name: "AppHeader",
+  props: { title: String, "new-button": String }
 };
 </script>
 
@@ -24,8 +25,7 @@ export default {
   flex: 1;
 }
 
-.btn{
-  margin-right:20px;
+.btn {
+  margin-right: 20px;
 }
-
 </style>

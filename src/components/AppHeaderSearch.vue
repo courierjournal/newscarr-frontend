@@ -3,7 +3,13 @@
     <h2 class="app-title">{{title}}</h2>
     <div>
       <button class="btn">{{newButton}}</button>
-      <input class="input-search" type="text" placeholder="Search">
+      <input
+        class="input-search"
+        type="text"
+        :value="searchText"
+        @input="update"
+        placeholder="Search..."
+      >
     </div>
   </div>
 </template>
@@ -11,7 +17,17 @@
 <script>
 export default {
   name: "AppHeader",
-  props: { title: String, "new-button": String }
+  props: { title: String, "new-button": String },
+  data() {
+    return {
+    searchText : ""
+    }
+  },
+  methods: {
+    update(){
+
+    }
+  }
 };
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <AppHeaderSearch title="Gun Violence Database Admin" new-button="New Incident +"/>
+    <AppHeaderSearch title="Gun Violence Database Admin" new-button="New Incident"/>
     <ListView :list="incidentList" @editRecord="editRecord"/>
-    <modal v-if="showModal" :record="recordModel" @close="showModal = false"/>
+    <modal v-if="showModal" :record="recordModel" @close="closeModal"/>
   </div>
 </template>
 
@@ -42,34 +42,22 @@ export default {
         })
         .catch(err => {});
     },
-    upsertVictimData(id) {
-      fetch("/gun-violence-database/upsert-victim", {
-        method: "POST",
-        body: null
-      }).catch(err => {});
-    },
-    upsertSuspectData(id) {
-      fetch("/gun-violence-database/upsert-suspect", {
-        method: "POST",
-        body: null
-      }).catch(err => {});
-    },
-    upsertIncidentData(id) {
-      fetch("/gun-violence-database/upsert-incident", {
-        method: "POST",
-        body: null
-      }).catch(err => {});
-    },
+    saveRecord() {},
+
     deleteRecord(id, table) {
       fetch("/gun-violence-database/delete-record", {
         method: "DELETE",
         body: null
       }).catch(err => {});
     },
-    saveImage() {},
+    newRecord() {},
     editRecord(id) {
       this.getFullRecord(id);
       this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+      this.recordModel = {};
     }
   }
 };

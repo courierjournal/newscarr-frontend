@@ -4,6 +4,9 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
             <div class="incident-body">
               <div class="modal-header">
                 <h3>Incident Details</h3>
@@ -71,36 +74,11 @@
               <div class="modal-header">
                 <h3>Victims ({{victimsLength}})</h3>
               </div>
-              <div class="victim-container" v-for="(victim, index) in record.victims" :key="index">
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <button>></button>
-                        </div>
-                  <div class="form-group col-md-4">
-                    <label>Name</label>
-                    <input class="form-control" type="text" v-model="victim.name">
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label>Sex</label>
-                    <select class="form-control" v-model="victim.sex">
-                        <option value="">Unknown</option>
-                        <option value="m">Male</option>
-                        <option value="f">Female</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label>Race</label>
-                    <select class="form-control" v-model="victim.race">
-                        <option value="">Unknown</option>
-                        <option value="w">White</option>
-                        <option value="b">Black</option>
-                        <option value="h">Hispanic</option>
-                        <option value="a">Asian</option>
-                        <option value="o">Other</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+              <Profile
+                v-for="(victim, index) in record.victims"
+                :key="index"
+                v-bind:profileData="victim"
+              />
             </div>
             <div class="suspect-body">
               <div class="modal-header">
@@ -126,8 +104,11 @@
 </template>
 
 <script>
+import Profile from "./Profile";
+
 export default {
   name: "Modal",
+  components: { Profile },
   props: { record: Object },
   computed: {
     victimsLength: function() {
@@ -142,7 +123,14 @@ export default {
       }
       return 0;
     }
+  },
+  mounted(){
+      document.querySelector('body').classList.add('modal-active');
+  },
+  destroyed(){
+      document.querySelector('body').classList.remove('modal-active');
   }
+  
 };
 </script>
 
@@ -152,19 +140,16 @@ export default {
   z-index: 9998;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 3em 0;
 }
 
 .modal-container {

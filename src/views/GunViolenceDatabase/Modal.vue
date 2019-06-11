@@ -11,64 +11,7 @@
               <div class="modal-header">
                 <h3>Incident Details</h3>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label>Date</label>
-                  <input class="form-control" type="date" v-model="record.date">
-                </div>
-                <div class="form-group col-md-4">
-                  <label>Time</label>
-                  <input class="form-control" type="time" v-model="record.time">
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-5">
-                  <label>Address</label>
-                  <input class="form-control" type="text" v-model="record.address">
-                </div>
-                <div class="form-group col-md-3">
-                  <label>City</label>
-                  <input class="form-control" type="text" v-model="record.city">
-                </div>
-                <div class="form-group col-md-2">
-                  <label>State</label>
-                  <input class="form-control" type="text" maxlength="2" v-model="record.state">
-                </div>
-                <div class="form-group col-md-2">
-                  <label>Zip</label>
-                  <input class="form-control" type="text" maxlength="5" v-model="record.zip">
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Narrative</label>
-                  <textarea class="form-control" rows="3" v-model="record.narrative"></textarea>
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Notes</label>
-                  <textarea class="form-control" rows="3" v-model="record.notes"></textarea>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Guns</label>
-                  <textarea class="form-control" rows="3" v-model="record.guns"></textarea>
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Source(s)</label>
-                  <textarea class="form-control" rows="3" v-model="record.source"></textarea>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label>Article Link</label>
-                  <input class="form-control" type="text" v-model="record.story">
-                </div>
-              </div>
+              <IncidentEntry v-bind:incident="record.incident"/>
             </div>
             <div class="victim-body">
               <div class="modal-header">
@@ -104,11 +47,12 @@
 </template>
 
 <script>
+import IncidentEntry from "./IncidentEntry"
 import Profile from "./Profile";
 
 export default {
   name: "Modal",
-  components: { Profile },
+  components: { Profile, IncidentEntry },
   props: { record: Object },
   computed: {
     victimsLength: function() {
@@ -124,13 +68,12 @@ export default {
       return 0;
     }
   },
-  mounted(){
-      document.querySelector('body').classList.add('modal-active');
+  mounted() {
+    document.querySelector("body").classList.add("modal-active");
   },
-  destroyed(){
-      document.querySelector('body').classList.remove('modal-active');
+  destroyed() {
+    document.querySelector("body").classList.remove("modal-active");
   }
-  
 };
 </script>
 

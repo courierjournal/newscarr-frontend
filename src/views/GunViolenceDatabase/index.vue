@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       incidentList: [],
-      recordModel: {},
+      recordModel: { incident: {}, victims: [], suspects: [] },
       showModal: false
     };
   },
@@ -57,7 +57,7 @@ export default {
     },
     closeModal() {
       this.showModal = false;
-      this.recordModel = {};
+      this.recordModel = { incident: {}, victims: [], suspects: [] };
     }
   }
 };

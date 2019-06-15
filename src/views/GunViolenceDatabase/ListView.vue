@@ -1,6 +1,12 @@
 <template>
   <div class="table-container">
     <table>
+      <colgroup>
+        <col style="width:15%">
+        <col style="width:25%">
+        <col style="width:10%">
+        <col style="width:50%">
+      </colgroup>
       <thead>
         <tr>
           <th>Incident Date</th>
@@ -28,7 +34,7 @@ export default {
   computed: {},
   methods: {
     editIncident(index) {
-      this.$emit('editRecord', index);
+      this.$emit("editRecord", index);
     }
   }
 };
@@ -47,6 +53,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
+  table-layout: fixed;
 }
 
 thead {
@@ -69,5 +76,11 @@ th {
   text-align: left;
   vertical-align: middle;
   border-radius: 2px;
+}
+
+td:nth-child(4) {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>

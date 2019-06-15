@@ -2,7 +2,7 @@
   {
     "name": "Contacts",
     "path": "/contacts",
-    "component": "Contacts.vue",
+    "component": "Contacts/index.vue",
     "description": "A quick list of frequently used contacts",
     "icon": "contacts.png"
   },

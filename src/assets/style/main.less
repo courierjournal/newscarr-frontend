@@ -10,10 +10,16 @@ body {
 }
 
 a,
-a:hover,
 a:visited {
   text-decoration: none;
-  color: inherit;
+  color: @blue;
+  border-bottom: 1px dotted @blue;
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: @darkblue;
+  border-color: @darkblue;
 }
 
 .app-container {
@@ -117,6 +123,6 @@ select {
   height: calc(2.25rem + 2px);
 }
 
-.modal-active{
-  overflow:hidden;
+.modal-active {
+  overflow: hidden;
 }

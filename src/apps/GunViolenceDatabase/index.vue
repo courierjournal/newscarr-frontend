@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <AppHeaderSearch title="Contacts" new-button="New Contact"/>
+    <AppHeaderSearch title="Gun Violence Database Admin" new-button="New Incident"/>
     <ListView :list="incidentList" @editRecord="editRecord"/>
     <modal v-if="showModal" :record="recordModel" @close="closeModal"/>
   </div>
@@ -9,11 +9,11 @@
 <script>
 import ListView from "./ListView";
 import Modal from "./Modal";
-import AppHeaderSearch from "@/components/AppHeaderSearch";
+import AppHeaderSearch from "@/global-components/AppHeaderSearch";
 import { baseUrl } from "@/baseUrl.js";
 
 export default {
-  name: "Contacts",
+  name: "GunViolenceDatabase",
   components: { ListView, AppHeaderSearch, Modal },
   data() {
     return {

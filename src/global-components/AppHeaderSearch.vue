@@ -11,13 +11,14 @@
         placeholder="Search..."
       >
     </div>
+    <p v-if="description" class="description">{{description}}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: "AppHeader",
-  props: { title: String, "new-button": String },
+  props: { title: String, "new-button": String, description: String },
   data() {
     return {
     searchText : ""

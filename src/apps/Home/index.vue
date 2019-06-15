@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import apps from "@/apps.json";
+import apps from "@/apps/apps.json";
 
 export default {
   name: "home",
@@ -31,7 +31,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 .home_app-container {
   max-width: 100px;
   text-align: center;
@@ -40,6 +40,12 @@ export default {
   cursor: pointer;
   vertical-align: top;
   transition: transform 0.2s;
+  color: #222;
+  border: none;
+}
+
+.home_app-container:hover,
+.home_app-container:visited {
   color: #222;
 }
 

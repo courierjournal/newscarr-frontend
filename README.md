@@ -1,13 +1,15 @@
 # Newscarr Frontend
-A modular app-driven dashboard developed and used internally by Courier Journal staff. Holds tools, databases, and admin panels to make our lives a little easier. Special care has been given to the UI/UX to mimic modern smartphones and make the experience as frictionless as possible.
-![alt text](screenshot_1.jpg "Homepage") ![alt text](screenshot_2.jpg "Example App")
+A modular app-driven dashboard developed and used internally by Courier Journal staff. Holds tools, databases, commonly used lists and admin panels to make our jobs a little easier.
+![alt text](screenshot.jpg "Screenshot")
 
 ## App Structure
-Uses VueJS + Vue Router + LESS. Each "app" is an inidvidual SFC file that contains all logic for that app.
+Uses VueJS + Vue Router + LESS. Each "app" is an individual SFC that contains all frontend logic for that particular scope. The monolithic nature and ability to extend and build new apps using existing global components makes dev time much quicker than starting from scratch. Future plans include the ability to eject each app with NUXT so we can wrap just that app and it's backend in a container to make it more portable.
 
-`src/apps/` - Every app including the homepage is in it's own subdirectory as an index.vue SFC file. Components specific to that app also live alongside the
+`public/` - Everything in here is copied over to `dist/` at build time.
 
-`src/apps/apps.json` - A list of all available apps. This file bootstraps the router as well as defines what appears on the homepage.
+`src/apps/` - Every app including the homepage is in it's own subdirectory as an index.vue file. Components specific to that app also live in the subdirectory.
+
+`src/apps/apps.json` - A list of all available apps and their meta data. This file bootstraps the router as well as defines what appears on the homepage.
 
 `assets/` - contains all globaly used assets including style sheets.
 

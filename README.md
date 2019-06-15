@@ -1,5 +1,6 @@
 # Newscarr Frontend
 A modular app-driven dashboard developed and used internally by Courier Journal staff. Holds tools, databases, commonly used lists and admin panels to make our jobs a little easier.
+
 ![alt text](screenshot.jpg "Screenshot")
 
 ## App Structure

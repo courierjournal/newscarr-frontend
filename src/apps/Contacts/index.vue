@@ -21,6 +21,11 @@ export default {
   components: { ListView, AppHeaderSearch },
   data() {
     return {
+      header: {
+        title: "Contacts",
+        newButton: "New Contact",
+        description: "This app contains a categorized list of commonly used contacts."
+      },
       contactList: [],
       showModal: false
     };

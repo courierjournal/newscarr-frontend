@@ -9,8 +9,8 @@
 <script>
 import ListView from "./ListView";
 import Modal from "./Modal";
-import AppHeaderSearch from "@/assets/components/AppHeaderSearch";
-import { baseUrl } from "@/baseUrl.js";
+import AppHeaderSearch from "@/assets/components/AppHeader";
+import { baseUrl } from "@/assets/libs/baseUrl.js";
 
 export default {
   name: "GunViolenceDatabase",

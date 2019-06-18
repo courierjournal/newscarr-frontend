@@ -1,33 +1,44 @@
 <template>
   <div class="app-container">
-    <AppHeaderSearch
-      title="Contacts"
-      new-button="New Contact"
-      description="Commonly used contacts"
+    <AppHeader
+      :title="header.title"
+      :new-button="header.newButton"
+      :description="header.description"
+      @search="searchRecords"
     />
-    <ListView :list="contactList" @editRecord="editRecord"/>
-    <modal v-if="showModal" :record="recordModel" @close="closeModal"/>
+
+    <ListGroup :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord"/>
+    <!--<modal v-if="showModal" :record="recordModel" @close="closeModal"/>-->
   </div>
 </template>
 
 <script>
-import ListView from "./ListView";
-//import Modal from "./Modal";
-import AppHeaderSearch from "@/assets/components/AppHeaderSearch";
-import { baseUrl } from "@/baseUrl.js";
+import AppHeader from "@/assets/components/AppHeader";
+import ListGroup from "@/assets/components/ListGroup";
+import { baseUrl } from "@/assets/libs/baseUrl";
 
 export default {
   name: "Contacts",
-  components: { ListView, AppHeaderSearch },
+  components: { AppHeader, ListGroup },
   data() {
     return {
       header: {
         title: "Contacts",
         newButton: "New Contact",
-        description: "This app contains a categorized list of commonly used contacts."
+        description:
+          "A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing."
       },
-      contactList: [],
-      showModal: false
+      list: {
+        header: [
+          { label: "Position", width: 25, foo: "name" },
+          { label: "Contact Person", width: 30, foo: "contactPerson"},
+          { label: "Phone", width: 20, foo: "phone" },
+          { label: "Email", width: 25, foo: "email" }
+        ],
+        groupby: "category",
+        data: []
+      },
+      modal: { show: false }
     };
   },
   created() {
@@ -38,25 +49,24 @@ export default {
       fetch(`${baseUrl}/contacts/get-list`)
         .then(res => res.json())
         .then(data => {
-          this.contactList = data;
+          this.list.data = data;
         })
-        .catch(err => {});
+        .catch(err => {
+          console.log("Error fetching contacts list");
+        });
     },
-    saveRecord() {},
-
-    deleteRecord(id, table) {
-      fetch("/gun-violence-database/delete-record", {
-        method: "DELETE",
-        body: null
-      }).catch(err => {});
-    },
-    newRecord() {},
     editRecord(id) {
-      this.getFullRecord(id);
-      this.showModal = true;
+      console.log(id);
+      this.modal.show = true;
     },
+    saveRecord(id) {},
+    deleteRecord(id) {},
+    newRecord() {},
     closeModal() {
-      this.showModal = false;
+      this.modal.show = false;
+    },
+    searchRecords(query){
+
     }
   }
 };

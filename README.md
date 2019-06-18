@@ -12,9 +12,11 @@ Uses VueJS + Vue Router + LESS. Each "app" is an individual SFC that contains al
 
 `src/apps/apps.json` - A list of all available apps and their meta data. This file bootstraps the router as well as defines what appears on the homepage. Must register any new apps here before testing.
 
-`src/assets/styles/` - contains all globaly used style sheets 
+`src/assets/styles/` - contains all globally used style sheets 
 
 `src/assets/components/` - generic reusable components that can be used by any app.
+
+`src/assets/libs/` - all globally accessible libraries
 
 # Standard dev stuff (Vue Cli)
 ## Project setup

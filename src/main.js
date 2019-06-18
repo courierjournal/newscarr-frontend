@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import css from "@/assets/style/main.less"
+import css from "@/assets/styles/main.less"
 
 Vue.config.productionTip = false
 

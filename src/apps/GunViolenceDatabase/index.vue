@@ -9,7 +9,7 @@
 <script>
 import ListView from "./ListView";
 import Modal from "./Modal";
-import AppHeaderSearch from "@/global-components/AppHeaderSearch";
+import AppHeaderSearch from "@/assets/components/AppHeaderSearch";
 import { baseUrl } from "@/baseUrl.js";
 
 export default {

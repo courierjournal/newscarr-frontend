@@ -9,7 +9,7 @@
   {
     "name": "Bookmarks",
     "path": "/bookmarks",
-    "component": "Bookmarks.vue",
+    "component": "Bookmarks/index.vue",
     "description": "A quick list of frequently used websites",
     "icon": "bookmarks.png"
   },

@@ -23,17 +23,16 @@ export default {
   data() {
     return {
       header: {
-        title: "Contacts",
-        newButton: "New Contact",
+        title: "Bookmarks",
+        newButton: "New Bookmark",
         description:
-          "A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing."
+          "A collection of commonly used websites sorted by category. Click on a row to see more. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing."
       },
       list: {
         header: [
-          { label: "Position", width: 25, key: "name" },
-          { label: "Contact Person", width: 30, key: "contactPerson"},
-          { label: "Phone", width: 20, key: "phone" },
-          { label: "Email", width: 25, key: "email" }
+          { label: "Name", width: 25, key: "name" },
+          { label: "URL", width: 50, key: "url"},
+          { label: "Notes", width: 25, key: "notes" }
         ],
         groupby: "category",
         data: []
@@ -46,13 +45,13 @@ export default {
   },
   methods: {
     getList() {
-      fetch(`${baseUrl}/contacts/get-list`)
+      fetch(`${baseUrl}/bookmarks/get-list`)
         .then(res => res.json())
         .then(data => {
           this.list.data = data;
         })
         .catch(err => {
-          console.log("Error fetching contacts list");
+          console.log("Error fetching bookmarks list");
         });
     },
     editRecord(id) {

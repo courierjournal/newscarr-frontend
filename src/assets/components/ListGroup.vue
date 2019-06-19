@@ -18,7 +18,7 @@
             :key="index"
             @click="editRecord(item.id)"
           >
-            <td v-for="(column, index) in header" :key="index">{{item[column.foo]}}</td>
+            <td v-for="(column, index) in header" :key="index">{{item[column.key]}}</td>
           </tr>
         </tbody>
       </table>
@@ -58,7 +58,7 @@ export default {
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top:30px;
   font-family: Avenir;
   font-size: 0.9em;
 }
@@ -91,14 +91,14 @@ th {
   border-radius: 2px;
 }
 
-td:nth-child(4) {
+td {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
 section {
-  margin-bottom: 100px;
+  margin-bottom: 70px;
 }
 
 h4 {

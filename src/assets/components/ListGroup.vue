@@ -18,7 +18,11 @@
             :key="index"
             @click="editRecord(item.id)"
           >
-            <td v-for="(column, index) in header" :key="index">{{item[column.key]}}</td>
+            <td
+              v-for="(column, index) in header"
+              :key="index"
+              v-html="formatHyperlink(item[column.key])"
+            ></td>
           </tr>
         </tbody>
       </table>
@@ -43,11 +47,19 @@ export default {
     }
   },
   methods: {
+    formatHyperlink(val) {
+      if (typeof val === "string") {
+        if (val.substr(0, 4) === "http") {
+          return `<a href="${val}" target="_blank">${val}</a>`;
+        }
+        if (val.indexOf("@") > 0 && val.indexOf(" ") === -1) {
+          return `<a href="mailto:${val}">${val}</a>`;
+        }
+      }
+      return val;
+    },
     editRecord(index) {
       this.$emit("edit", index);
-    },
-    formatEmail(email) {
-      return `<a href="mailto:${email}">${email}</a>`;
     }
   }
 };
@@ -58,7 +70,7 @@ export default {
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
-  margin-top:30px;
+  margin-top: 30px;
   font-family: Avenir;
   font-size: 0.9em;
 }

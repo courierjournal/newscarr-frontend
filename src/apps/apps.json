@@ -14,60 +14,10 @@
     "icon": "bookmarks.png"
   },
   {
-    "name": "Voter Registration Database",
-    "path": "/voter-registration-database",
-    "component": "VoterRegistration.vue",
-    "description": "Lookup people in the voter registration file from the SoS",
-    "icon": "voter.png"
-  },
-  {
-    "name": "Homicide Database",
-    "path": "/homicide-database",
-    "component": "HomicideDatabase.vue",
-    "description": "Edit homicide database",
-    "icon": "homicides.png"
-  },
-  {
     "name": "Gun Violence Database",
     "path": "/gun-violence-database",
     "component": "GunViolenceDatabase/index.vue",
     "description": "Admin panel for the gun violence database",
     "icon": "gunshot.png"
-  },
-  {
-    "name": "Athlete of the Week",
-    "path": "/athlete-of-the-week",
-    "component": "AowAdmin/index.vue",
-    "description": "Admin panel for athlete of the week voting",
-    "icon": "trophy.png"
-  },
-  {
-    "name": "Photo Request",
-    "path": "/photo-request",
-    "component": "PhotoRequest/index.vue",
-    "description": "",
-    "icon": "camera.png"
-  },
-  {
-    "name": "Best of CJ",
-    "path": "/best-of",
-    "component": "PhotoRequest/index.vue",
-    "description": "",
-    "icon": "bestof.png"
-  },
-  {
-    "name": "File Box",
-    "path": "/best-of",
-    "component": "PhotoRequest/index.vue",
-    "description": "",
-    "icon": "cloud.png"
-  },
-  {
-    "name": "Lit Ratings Admin",
-    "path": "/lit-admin",
-    "component": "PhotoRequest/index.vue",
-    "description": "",
-    "icon": "gears.png"
   }
-
 ]

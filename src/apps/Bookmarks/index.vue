@@ -4,22 +4,28 @@
       :title="header.title"
       :new-button="header.newButton"
       :description="header.description"
+      @new="newRecord"
       @search="searchRecords"
     />
 
     <ListGroup :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord"/>
-    <!--<modal v-if="showModal" :record="recordModel" @close="closeModal"/>-->
+    <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
+      <p>Modal Data Goes Here</p>
+      <p>Debug:</p>
+      <pre>{{modal.data}}</pre>
+    </Modal>
   </div>
 </template>
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
 import ListGroup from "@/assets/components/ListGroup";
+import Modal from "@/assets/components/Modal";
 import { baseUrl } from "@/assets/libs/baseUrl";
 
 export default {
   name: "Contacts",
-  components: { AppHeader, ListGroup },
+  components: { AppHeader, ListGroup, Modal },
   data() {
     return {
       header: {
@@ -31,13 +37,13 @@ export default {
       list: {
         header: [
           { label: "Name", width: 25, key: "name" },
-          { label: "URL", width: 50, key: "url"},
+          { label: "URL", width: 50, key: "url" },
           { label: "Notes", width: 25, key: "notes" }
         ],
         groupby: "category",
         data: []
       },
-      modal: { show: false }
+      modal: { show: false, title: "", data:null }
     };
   },
   created() {
@@ -56,17 +62,21 @@ export default {
     },
     editRecord(id) {
       console.log(id);
+      this.modal.title = "Edit Record";
       this.modal.show = true;
+      this.modal.data = this.list.data.filter(n=>n.id===id);
     },
     saveRecord(id) {},
     deleteRecord(id) {},
-    newRecord() {},
+    newRecord() {
+      this.modal.title = "New Record";
+      this.modal.data = null;
+      this.modal.show = true;
+    },
     closeModal() {
       this.modal.show = false;
     },
-    searchRecords(query){
-
-    }
+    searchRecords(query) {}
   }
 };
 </script>

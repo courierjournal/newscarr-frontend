@@ -3,7 +3,7 @@
     <div class="header-bar">
       <h2 class="app-title">{{title}}</h2>
       <div>
-        <button class="btn">{{newButton}}</button>
+        <button class="btn" @click="$emit('new')">{{newButton}}</button>
         <input
           class="input-search"
           type="text"
@@ -45,10 +45,10 @@ export default {
   font-family: Lato, sans-serif;
 }
 
-.description{
-  max-width:960px;
-  margin:0 auto;
-  font-family:Avenir;
+.description {
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: Avenir;
 }
 
 .btn {

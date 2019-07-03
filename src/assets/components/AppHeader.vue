@@ -3,14 +3,15 @@
     <div class="header-bar">
       <h2 class="app-title">{{title}}</h2>
       <div>
-        <button class="btn" @click="$emit('new')">{{newButton}}</button>
+        <button v-if="newButton" class="btn" @click="$emit('new')">{{newButton}}</button>
         <input
+          v-if="searchText"
           class="input-search"
           type="text"
           :value="searchText"
           @input="update"
           placeholder="Search..."
-        >
+        />
       </div>
     </div>
     <p v-if="description" class="description">{{description}}</p>

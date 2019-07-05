@@ -1,11 +1,8 @@
 <template>
   <div class="app-container">
-    <AppHeader
-      :title="header.title"
-      :description="header.description"
-    />
+    <AppHeader :title="header.title" :description="header.description" />
 
-    <VoterSearch/>
+    <VoterSearch @search="search" />
     <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
       <p>Modal Data Goes Here</p>
       <p>Debug:</p>
@@ -33,6 +30,11 @@ export default {
       },
       modal: { show: false }
     };
+  },
+  methods: {
+    search(values) {
+      console.log("search fired", values);
+    }
   }
 };
 </script>

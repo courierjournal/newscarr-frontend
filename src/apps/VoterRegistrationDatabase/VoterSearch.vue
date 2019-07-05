@@ -188,7 +188,7 @@
       </div>
     </div>
     <div class="row">
-      <button type="button" class="btn" @click="search">Search</button>
+      <button type="button" class="btn" @click="$emit('search', {foo:'bar'})">Search</button>
     </div>
   </form>
 </template>
@@ -197,11 +197,6 @@
 <script>
 export default {
   name: "VoterSearch",
-  methods: {
-    search() {
-      console.log("search");
-    }
-  }
 };
 </script>
 

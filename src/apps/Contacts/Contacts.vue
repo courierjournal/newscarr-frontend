@@ -8,7 +8,7 @@
       @search="searchRecords"
     />
 
-    <ListGroup :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord"/>
+    <ListGroup :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord" />
     <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
       <p>Modal Data Goes Here</p>
       <p>Debug:</p>
@@ -37,12 +37,12 @@ export default {
       list: {
         header: [
           { label: "Position", width: 25, key: "name" },
-          { label: "Contact Person", width: 30, key: "contactPerson"},
+          { label: "Contact Person", width: 30, key: "contactPerson" },
           { label: "Phone", width: 20, key: "phone" },
           { label: "Email", width: 25, key: "email" }
         ],
         groupby: "category",
-        data: []
+        data: null
       },
       modal: { show: false }
     };
@@ -65,11 +65,10 @@ export default {
       console.log(id);
       this.modal.title = "Edit Record";
       this.modal.show = true;
-      this.modal.data = this.list.data.filter(n=>n.id===id);
+      this.modal.data = this.list.data.filter(n => n.id === id);
     },
     saveRecord(id) {},
     deleteRecord(id) {},
-    newRecord() {},
     newRecord() {
       this.modal.title = "New Record";
       this.modal.data = null;
@@ -78,9 +77,7 @@ export default {
     closeModal() {
       this.modal.show = false;
     },
-    searchRecords(query){
-
-    }
+    searchRecords(query) {}
   }
 };
 </script>

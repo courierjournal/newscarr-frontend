@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <CircleLoader v-if="data.length ===0"/>
+    <CircleLoader v-if="data === null"/>
     <section v-for="(categoryGroup,index) in categorizedList" :key="index">
       <h4>{{categoryGroup.category}}</h4>
       <table>

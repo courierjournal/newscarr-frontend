@@ -14,7 +14,7 @@
     "icon": "bookmarks.png"
   },
   {
-    "name": "Voter Registration Database",
+    "name": "KY Voter Database",
     "path": "/voter-registration-database",
     "component": "VoterRegistrationDatabase/VoterRegistrationDatabase.vue",
     "description": "Lookup tool for KY voter registration data",

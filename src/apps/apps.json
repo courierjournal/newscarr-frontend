@@ -3,14 +3,14 @@
     "name": "Contacts",
     "path": "/contacts",
     "component": "Contacts/Contacts.vue",
-    "description": "A quick list of frequently used contacts",
+    "description": "A list of frequently used contacts",
     "icon": "contacts.png"
   },
   {
     "name": "Bookmarks",
     "path": "/bookmarks",
     "component": "Bookmarks/index.vue",
-    "description": "A quick list of frequently used websites",
+    "description": "A list of frequently used websites",
     "icon": "bookmarks.png"
   },
   {

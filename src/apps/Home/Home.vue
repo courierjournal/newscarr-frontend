@@ -6,7 +6,7 @@
       :key="index"
       :to="item.path"
     >
-      <img class="home_app-icon" :src="getRelativeIconURL(item.icon)">
+      <img class="home_app-icon" :src="`/img/${item.icon}`">
       <div class="home_app-name">{{item.name}}</div>
     </router-link>
   </div>
@@ -21,11 +21,6 @@ export default {
     return {
       routes: apps
     };
-  },
-  methods: {
-    getRelativeIconURL(filename) {
-      return `/img/${filename}`;
-    }
   }
 };
 </script>

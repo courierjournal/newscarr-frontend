@@ -5,7 +5,6 @@
       <div>
         <button v-if="newButton" class="btn" @click="$emit('new')">{{newButton}}</button>
         <input
-          v-if="searchText"
           class="input-search"
           type="text"
           :value="searchText"

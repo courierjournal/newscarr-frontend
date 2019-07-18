@@ -8,8 +8,15 @@
       @search="searchRecords"
     />
 
-    <ListGroup :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord" />
-    <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
+    <ListGroup
+      :header="list.header"
+      :groupby="list.groupby"
+      :data="list.data"
+      :editable="list.editable"
+      @edit="editRecord"
+    />
+
+    <Modal v-show="modal.show" :title="modal.title" @close="closeModal">
       <p>Modal Data Goes Here</p>
       <p>Debug:</p>
       <pre>{{modal.data}}</pre>
@@ -42,9 +49,10 @@ export default {
           { label: "Email", width: 25, key: "email" }
         ],
         groupby: "category",
+        editable: true,
         data: null
       },
-      modal: { show: false }
+      modal: { show: false, title: "Edit Contact Info" }
     };
   },
   created() {
@@ -63,7 +71,6 @@ export default {
     },
     editRecord(id) {
       console.log(id);
-      this.modal.title = "Edit Record";
       this.modal.show = true;
       this.modal.data = this.list.data.filter(n => n.id === id);
     },

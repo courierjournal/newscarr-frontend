@@ -117,8 +117,4 @@ export default {
 .modal-close-container {
   margin-left: auto;
 }
-
-.modal-footer{
-    display:none;
-}
 </style>

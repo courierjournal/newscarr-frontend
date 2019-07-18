@@ -8,7 +8,7 @@
       @search="searchRecords"
     />
 
-    <ListGroup :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord"/>
+    <List :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord"/>
     <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
       <p>Modal Data Goes Here</p>
       <p>Debug:</p>
@@ -19,13 +19,13 @@
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
-import ListGroup from "@/assets/components/ListGroup";
+import List from "@/assets/components/List";
 import Modal from "@/assets/components/Modal";
 import { baseUrl } from "@/assets/libs/baseUrl";
 
 export default {
   name: "Contacts",
-  components: { AppHeader, ListGroup, Modal },
+  components: { AppHeader, List, Modal },
   data() {
     return {
       header: {

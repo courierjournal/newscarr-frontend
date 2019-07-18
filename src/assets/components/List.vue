@@ -35,7 +35,7 @@ import _ from "lodash";
 import CircleLoader from "@/assets/components/CircleLoader";
 
 export default {
-  name: "ListGroup",
+  name: "List",
   components: { CircleLoader },
   props: { header: Array, groupby: String, data: Array },
   computed: {

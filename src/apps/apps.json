@@ -12,15 +12,7 @@
     "component": "Bookmarks/index.vue",
     "description": "A list of frequently used websites",
     "icon": "bookmarks.png"
-  },
-  {
-    "name": "KY Voter Database",
-    "path": "/voter-registration-database",
-    "component": "VoterRegistrationDatabase/VoterRegistrationDatabase.vue",
-    "description": "Lookup tool for KY voter registration data",
-    "icon": "voter.png"
-  },
-  {
+  },{
     "name": "Gun Violence Database",
     "path": "/gun-violence-database",
     "component": "GunViolenceDatabase/index.vue",

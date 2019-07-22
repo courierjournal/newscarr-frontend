@@ -4,7 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <div class="modal-title">{{title}}</div>
+            <h4 class="modal-title">{{title}}</h4>
             <div class="modal-close-container">
               <button type="button" class="close" @click="$emit('close')">
                 <span aria-hidden="true">×</span>
@@ -15,9 +15,13 @@
             <slot></slot>
           </div>
           <div class="modal-footer">
-            <button class="modal-default-button" @click="$emit('close')">Delete</button>
-            <button class="modal-default-button" @click="$emit('close')">OK</button>
-            <button class="modal-default-button" @click="$emit('close')">Save</button>
+            <div class="modal-footer-delete-container">
+              <button class="btn modal-default-button delete" @click="$emit('deleteRecord')">Delete</button>
+            </div>
+            <div class="modal-footer-done-container">
+              <button class="btn modal-default-button save" @click="$emit('saveRecord')">Save</button>
+              <button class="btn modal-default-button" @click="$emit('close')">Done</button>
+            </div>
           </div>
         </div>
       </div>
@@ -39,7 +43,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style  scoped>
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -79,8 +84,25 @@ export default {
   margin: 20px 0;
 }
 
+.modal-footer {
+  display: flex;
+  align-items: center;
+}
+
+.modal-footer-done-container{
+  margin-left:auto;
+}
+
 .modal-default-button {
-  float: right;
+  margin:0 .5em;
+}
+
+.modal-default-button.delete{
+  background-color:#f44336
+}
+
+.modal-default-button.save{
+  background-color:#f57c00
 }
 
 .modal-enter {
@@ -102,6 +124,7 @@ export default {
   background: rgba(0, 0, 0, 0);
   border: 0;
   font-size: 32px;
+  line-height: 28px;
   font-weight: bold;
   color: #888;
 }
@@ -112,6 +135,13 @@ export default {
 
 .modal-header {
   display: flex;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.modal-title {
+  margin: 0;
 }
 
 .modal-close-container {

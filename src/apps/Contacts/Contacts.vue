@@ -16,10 +16,58 @@
       @edit="editRecord"
     />
 
-    <Modal v-show="modal.show" :title="modal.title" @close="closeModal">
-      <p>Modal Data Goes Here</p>
-      <p>Debug:</p>
-      <pre>{{modal.data}}</pre>
+    <Modal v-if="modal.show" :title="modal.title" :footer="modal.footer" @close="closeModal">
+      <input type="hidden" v-model="modal.data.id" />
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <label>Category</label>
+          <input type="text" class="form-control" v-model="modal.data.category" />
+        </div>
+        <div class="col-md-4 form-group">
+          <label>Contact Name</label>
+          <input type="text" class="form-control" v-model="modal.data.contactPerson" />
+        </div>
+        <div class="col-md-4 form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" v-model="modal.data.name" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <label>Primary Phone #</label>
+          <input
+            class="form-control"
+            type="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            placeholder="502-123-4567"
+            v-model="modal.data.phone"
+          />
+        </div>
+        <div class="col-md-2 form-group">
+          <label>Extension</label>
+          <input type="text" class="form-control" v-model="modal.data.ext" />
+        </div>
+        <div class="col-md-3 form-group">
+          <label>Secondary or Cell #</label>
+          <input
+            class="form-control"
+            type="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            placeholder="502-123-4567"
+            v-model="modal.data.altPhone"
+          />
+        </div>
+        <div class="col-md-4 form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" v-model="modal.data.email" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" v-model="modal.data.notes"></textarea>
+        </div>
+      </div>
     </Modal>
   </div>
 </template>
@@ -43,7 +91,7 @@ export default {
       },
       list: {
         header: [
-          { label: "Position", width: 25, key: "name" },
+          { label: "Position", width: 20, key: "name" },
           { label: "Contact Person", width: 30, key: "contactPerson" },
           { label: "Phone", width: 20, key: "phone" },
           { label: "Email", width: 25, key: "email" }
@@ -52,7 +100,11 @@ export default {
         editable: true,
         data: null
       },
-      modal: { show: false, title: "Edit Contact Info" }
+      modal: {
+        show: false,
+        title: "Edit Contact Info",
+        footer: ["delete", "save", "done"]
+      }
     };
   },
   created() {
@@ -72,7 +124,7 @@ export default {
     editRecord(id) {
       console.log(id);
       this.modal.show = true;
-      this.modal.data = this.list.data.filter(n => n.id === id);
+      this.modal.data = this.list.data.filter(n => n.id === id)[0];
     },
     saveRecord(id) {},
     deleteRecord(id) {},

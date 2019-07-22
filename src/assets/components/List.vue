@@ -1,28 +1,27 @@
 <template>
   <div class="table-container">
-    <CircleLoader v-if="data === null"/>
+    <CircleLoader v-if="data === null" />
     <section v-for="(categoryGroup,index) in categorizedList" :key="index">
-      <h4>{{categoryGroup.category}}</h4>
+      <h4 v-if="groupby">{{categoryGroup.category}}</h4>
       <table>
         <colgroup>
-          <col v-for="(column,index) in header" :key="index" :style="{width:column.width+'%'}">
+          <col v-for="(column,index) in header" :key="index" :style="{width:column.width+'%'}" />
+          <col v-if="editable" style="width:5%" />
         </colgroup>
         <thead>
           <tr>
             <th v-for="(column,index) in header" :key="index">{{column.label}}</th>
+            <th v-if="editable">More</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in categoryGroup.entries"
-            :key="index"
-            @click="editRecord(item.id)"
-          >
+          <tr v-for="(item, index) in categoryGroup.entries" :key="index">
             <td
               v-for="(column, index) in header"
               :key="index"
               v-html="formatHyperlink(item[column.key])"
             ></td>
+            <td v-if="editable" class="edit-cell" @click="editRecord(item.id)"><img class="edit-icon" src="img/edit.svg"></td>
           </tr>
         </tbody>
       </table>
@@ -37,13 +36,17 @@ import CircleLoader from "@/assets/components/CircleLoader";
 export default {
   name: "List",
   components: { CircleLoader },
-  props: { header: Array, groupby: String, data: Array },
+  props: { header: Array, groupby: String, data: Array, editable: Boolean },
   computed: {
     categorizedList() {
-      return _(this.data)
-        .groupBy(x => x[this.groupby])
-        .map((value, key) => ({ category: key, entries: value }))
-        .value();
+      if (this.groupby) {
+        return _(this.data)
+          .groupBy(x => x[this.groupby])
+          .map((value, key) => ({ category: key, entries: value }))
+          .value();
+      } else {
+        return { category: "", entries: this.data };
+      }
     }
   },
   methods: {
@@ -87,7 +90,6 @@ thead {
 
 tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  cursor: pointer;
 }
 
 tbody > tr:hover {
@@ -117,5 +119,20 @@ h4 {
   font-size: 1.5em;
   text-transform: uppercase;
   color: #2196f3;
+}
+
+.edit-cell{
+  text-align:center;
+  cursor:pointer;
+}
+
+.edit-cell:hover>.edit-icon{
+  transform:scale(1.1,1.1);
+}
+
+.edit-icon{
+  max-width:20px;
+  transition: transform .3s;
+  transform:scale(1,1);
 }
 </style>

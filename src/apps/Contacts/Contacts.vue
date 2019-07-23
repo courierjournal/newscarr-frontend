@@ -6,7 +6,7 @@
       :description="header.description"
       @new="newRecord"
       @search="searchRecords"
-    />
+    >A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing."</AppHeader>
 
     <List
       :header="list.header"
@@ -16,58 +16,65 @@
       @edit="editRecord"
     />
 
-    <Modal v-if="modal.show" :title="modal.title" :footer="modal.footer" @close="closeModal">
-      <input type="hidden" v-model="modal.data.id" />
-      <div class="row">
-        <div class="col-md-4 form-group">
-          <label>Category</label>
-          <input type="text" class="form-control" v-model="modal.data.category" />
+    <Modal
+      v-if="modal.show"
+      :title="modal.title"
+      :footer="modal.footer"
+      @close="closeModal"
+      @save="saveRecord"
+      @delete="deleteRecord"
+    >
+      <template>
+        <input type="hidden" v-model="modal.data.id" />
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label>Category</label>
+            <input type="text" class="form-control" v-model="modal.data.category" />
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Contact Name</label>
+            <input type="text" class="form-control" v-model="modal.data.contactPerson" />
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" v-model="modal.data.name" />
+          </div>
         </div>
-        <div class="col-md-4 form-group">
-          <label>Contact Name</label>
-          <input type="text" class="form-control" v-model="modal.data.contactPerson" />
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <label>Primary Phone #</label>
+            <input
+              class="form-control"
+              type="tel"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              v-model="modal.data.phone"
+            />
+          </div>
+          <div class="col-md-2 form-group">
+            <label>Extension</label>
+            <input type="text" class="form-control" v-model="modal.data.ext" />
+          </div>
+          <div class="col-md-3 form-group">
+            <label>Secondary or Cell #</label>
+            <input
+              class="form-control"
+              type="tel"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              v-model="modal.data.altPhone"
+            />
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" v-model="modal.data.email" />
+          </div>
         </div>
-        <div class="col-md-4 form-group">
-          <label>Title</label>
-          <input type="text" class="form-control" v-model="modal.data.name" />
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label>Notes</label>
+            <textarea class="form-control" v-model="modal.data.notes"></textarea>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 form-group">
-          <label>Primary Phone #</label>
-          <input
-            class="form-control"
-            type="tel"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            placeholder="502-123-4567"
-            v-model="modal.data.phone"
-          />
-        </div>
-        <div class="col-md-2 form-group">
-          <label>Extension</label>
-          <input type="text" class="form-control" v-model="modal.data.ext" />
-        </div>
-        <div class="col-md-3 form-group">
-          <label>Secondary or Cell #</label>
-          <input
-            class="form-control"
-            type="tel"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            placeholder="502-123-4567"
-            v-model="modal.data.altPhone"
-          />
-        </div>
-        <div class="col-md-4 form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" v-model="modal.data.email" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 form-group">
-          <label>Notes</label>
-          <textarea class="form-control" v-model="modal.data.notes"></textarea>
-        </div>
-      </div>
+      </template>
     </Modal>
   </div>
 </template>
@@ -85,9 +92,7 @@ export default {
     return {
       header: {
         title: "Contacts",
-        newButton: "New Contact",
-        description:
-          "A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing."
+        newButton: "New Contact"
       },
       list: {
         header: [
@@ -102,16 +107,16 @@ export default {
       },
       modal: {
         show: false,
-        title: "Edit Contact Info",
+        title: "",
         footer: ["delete", "save", "done"]
       }
     };
   },
   created() {
-    this.getList();
+    this.getRecords();
   },
   methods: {
-    getList() {
+    getRecords() {
       fetch(`${baseUrl}/contacts/get-list`)
         .then(res => res.json())
         .then(data => {
@@ -121,22 +126,32 @@ export default {
           console.log("Error fetching contacts list");
         });
     },
-    editRecord(id) {
-      console.log(id);
-      this.modal.show = true;
-      this.modal.data = this.list.data.filter(n => n.id === id)[0];
+    searchRecords(query) {
+      console.log("Querying api for:", query);
     },
-    saveRecord(id) {},
-    deleteRecord(id) {},
     newRecord() {
       this.modal.title = "New Record";
-      this.modal.data = null;
+      this.modal.data = {};
+      this.modal.show = true;
+    },
+    editRecord(id) {
+      this.openModal("Edit Contact Info");
+      this.modal.data = this.list.data.filter(n => n.id === id)[0];
+    },
+    saveRecord(id) {
+      console.log("Save record:", this.modal.data.id);
+      this.getRecords();
+    },
+    deleteRecord(id) {
+      console.log();
+    },
+    openModal(title) {
+      this.modal.title = title;
       this.modal.show = true;
     },
     closeModal() {
       this.modal.show = false;
-    },
-    searchRecords(query) {}
+    }
   }
 };
 </script>

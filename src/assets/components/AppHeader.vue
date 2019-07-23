@@ -13,7 +13,7 @@
         />
       </div>
     </div>
-    <p v-if="description" class="description">{{description}}</p>
+    <div class="description"><slot></slot></div>
   </div>
 </template>
 

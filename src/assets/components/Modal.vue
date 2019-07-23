@@ -16,10 +16,10 @@
           </div>
           <div class="modal-footer">
             <div class="modal-footer-delete-container">
-              <button class="btn modal-default-button delete" @click="$emit('deleteRecord')">Delete</button>
+              <button class="btn modal-default-button delete" @click="$emit('delete')">Delete</button>
             </div>
             <div class="modal-footer-done-container">
-              <button class="btn modal-default-button save" @click="$emit('saveRecord')">Save</button>
+              <button class="btn modal-default-button save" @click="$emit('save')">Save</button>
               <button class="btn modal-default-button" @click="$emit('close')">Done</button>
             </div>
           </div>

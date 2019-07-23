@@ -7,13 +7,19 @@ Vue.use(Router);
 
 //Dynamically create routes from our apps.json config
 let routes = apps.map(n => {
-  return { path: n.path, component: () => import("./apps/" + n.component) };
+  return {
+    path: n.path,
+    name: n.name,
+    meta: { description: n.description },
+    component: () => import("./apps/" + n.component)
+  };
 });
 
 //Make sure we push the home component as the first route available
 routes.unshift({
   path: "/",
-  name: "home",
+  name: "Home",
+  meta: { description: "Newscarr homepage" },
   component: Home
 });
 

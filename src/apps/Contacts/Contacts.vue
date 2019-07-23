@@ -1,12 +1,6 @@
 <template>
   <div class="app-container">
-    <AppHeader
-      :title="header.title"
-      :new-button="header.newButton"
-      :description="header.description"
-      @new="newRecord"
-      @search="searchRecords"
-    >A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing."</AppHeader>
+    <AppHeader :new-button="header.newButton" @new="newRecord" @search="searchRecords"/>
 
     <List
       :header="list.header"
@@ -91,7 +85,6 @@ export default {
   data() {
     return {
       header: {
-        title: "Contacts",
         newButton: "New Contact"
       },
       list: {
@@ -139,11 +132,11 @@ export default {
       this.modal.data = this.list.data.filter(n => n.id === id)[0];
     },
     saveRecord(id) {
-      console.log("Save record:", this.modal.data.id);
+      console.log("Saving record:", this.modal.data.id);
       this.getRecords();
     },
     deleteRecord(id) {
-      console.log();
+      console.log("Deleting record:", this.modal.data.id);
     },
     openModal(title) {
       this.modal.title = title;

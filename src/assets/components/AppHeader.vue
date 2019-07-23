@@ -1,7 +1,10 @@
 <template>
   <div class="header">
     <div class="header-bar">
-      <h2 class="app-title">{{title}}</h2>
+      <h2 class="app-title">
+        <slot name="title">{{$route.name}}</slot>
+      </h2>
+
       <div>
         <button v-if="newButton" class="btn" @click="$emit('new')">{{newButton}}</button>
         <input
@@ -13,7 +16,9 @@
         />
       </div>
     </div>
-    <div class="description"><slot></slot></div>
+    <div class="description">
+      <slot name="description">{{$route.meta.description}}</slot>
+    </div>
   </div>
 </template>
 

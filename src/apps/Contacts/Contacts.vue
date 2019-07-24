@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <AppHeader :new-button="header.newButton" @new="newRecord" @search="searchRecords"/>
+    <AppHeader :new-button="header.newButton" @new="newRecord" @search="searchRecords" />
 
     <List
       :header="list.header"

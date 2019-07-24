@@ -10,7 +10,7 @@ let routes = apps.map(n => {
   return {
     path: n.path,
     name: n.name,
-    meta: { description: n.description },
+    meta: { description: n.description, title: n.title },
     component: () => import("./apps/" + n.component)
   };
 });

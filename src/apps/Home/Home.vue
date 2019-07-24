@@ -7,7 +7,7 @@
       :to="item.path"
     >
       <img class="home_app-icon" :src="`/img/${item.icon}`" :title="item.description">
-      <div class="home_app-name">{{item.name}}</div>
+      <div class="home_app-name">{{item.title}}</div>
     </router-link>
   </div>
 </template>

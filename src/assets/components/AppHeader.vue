@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-bar">
       <h2 class="app-title">
-        <slot name="title">{{$route.name}}</slot>
+        <slot name="title">{{$route.meta.title}}</slot>
       </h2>
 
       <div>

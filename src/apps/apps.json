@@ -14,6 +14,13 @@
     "icon": "bookmarks.png"
   },
   {
+    "title": "Photo Budget",
+    "path": "/photo-budget",
+    "component": "PhotoBudget/PhotoBudget.vue",
+    "description": "Budgeting tool for the photo team. If you're a reporter looking to put in a request, click 'New Request' in the corner.",
+    "icon": "camera.png"
+  },
+  {
     "title": "Gun Violence Database",
     "path": "/gun-violence-database",
     "component": "GunViolenceDatabase/index.vue",

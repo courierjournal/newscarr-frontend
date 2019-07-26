@@ -11,56 +11,77 @@
       :footer="modal.footer"
       @close="closeModal"
       @save="saveRecord"
-      @delete="deleteRecord"
     >
       <template>
         <input type="hidden" v-model="modal.data.id" />
         <div class="row">
-          <div class="col-md-4 form-group">
-            <label>Category</label>
-            <input type="text" class="form-control" v-model="modal.data.category" />
+          <div class="col-md-8 form-group">
+            <label>Story Title</label>
+            <input type="text" class="form-control" v-model="modal.data.slug" />
           </div>
           <div class="col-md-4 form-group">
-            <label>Contact Name</label>
-            <input type="text" class="form-control" v-model="modal.data.contactPerson" />
-          </div>
-          <div class="col-md-4 form-group">
-            <label>Title</label>
-            <input type="text" class="form-control" v-model="modal.data.name" />
+            <label>Request Date</label>
+            <input type="datetime-local" class="form-control" v-model="modal.data.dateRequested" />
           </div>
         </div>
         <div class="row">
-          <div class="col-md-3 form-group">
-            <label>Primary Phone #</label>
+          <div class="col-md-4 form-group">
+            <label>Reporter Name</label>
+            <input class="form-control" type="text" v-model="modal.data.reporterName" />
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Reporter Cell</label>
             <input
               class="form-control"
               type="tel"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              v-model="modal.data.phone"
-            />
-          </div>
-          <div class="col-md-2 form-group">
-            <label>Extension</label>
-            <input type="text" class="form-control" v-model="modal.data.ext" />
-          </div>
-          <div class="col-md-3 form-group">
-            <label>Secondary or Cell #</label>
-            <input
-              class="form-control"
-              type="tel"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              v-model="modal.data.altPhone"
+              v-model="modal.data.reporterCell"
             />
           </div>
           <div class="col-md-4 form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" v-model="modal.data.email" />
+            <label>Reporter Email</label>
+            <input
+              class="form-control"
+              type="email"
+              v-model="modal.data.reporterEmail"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label>Contact Name</label>
+            <input class="form-control" type="text" v-model="modal.data.contactName" />
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Contact Cell</label>
+            <input
+              class="form-control"
+              type="tel"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              v-model="modal.data.contactCell"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Location</label>
+            <textarea class="form-control" v-model="modal.data.locationNotes"></textarea>
+          </div>
+           <div class="col-md-6 form-group">
+            <label>Address</label>
+            <textarea class="form-control" v-model="modal.data.address"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 form-group">
             <label>Notes</label>
-            <textarea class="form-control" v-model="modal.data.notes"></textarea>
+            <textarea class="form-control" v-model="modal.data.notes" rows="4"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label>Presto ID</label>
+            <input class="form-control" type="text" v-model="modal.data.prestoId" />
           </div>
         </div>
       </template>
@@ -82,14 +103,22 @@ export default {
     return {
       modal: {
         show: false,
+        data: {},
         title: "",
-        footer: ["delete", "save", "done"]
+        footer: ["save", "done"]
       }
     };
   },
   methods: {
-    newRecord() {},
-    searchRecords() {}
+    newRecord() {
+      this.modal.title = "New Photo Request";
+      this.modal.show = true;
+    },
+    searchRecords() {},
+    closeModal() {
+      this.modal.show = false;
+    },
+    saveRecord() {}
   }
 };
 </script>

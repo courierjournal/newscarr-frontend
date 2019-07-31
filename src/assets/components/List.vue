@@ -114,6 +114,10 @@ td {
   overflow: hidden;
 }
 
+td.overflow{
+  white-space: initial;
+}
+
 section {
   margin-bottom: 70px;
 }

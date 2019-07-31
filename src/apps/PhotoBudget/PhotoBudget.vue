@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
-    <AppHeader :new-button="'New Request'" @new="newRecord" @search="searchRecords" />
+    <AppHeader :new-button="'New Request'" @new="newRecord" />
     <div class="app-body">
       <div id="menu-bar">
         <button @click="viewState='list'">List</button>
         <button @click="viewState='calendar'">Calendar</button>
-        </div>
+      </div>
       <div id="list-container" v-if="viewState==='list'">
-        <List
-          :header="list.header"
-          :loading="list.loading"
-          :groupby="list.groupby"
-          :data="list.data"
-        >
+        <List :header="list.header" :loading="list.loading" :data="list.data">
           <template v-slot:row="rowProps">
             <td>{{rowProps.item.photographerName}}</td>
             <td>{{rowProps.item.reporterName}}</td>
-            <td>{{rowProps.item.slug}}</td>
+            <td class="overflow">{{rowProps.item.slug}}</td>
             <td>{{rowProps.item.requestDate}}</td>
-            <td>{{rowProps.item.prestoId}}</td>
+            <td>
+              <a
+                :href="`https://presto.gannettdigital.com/#!/stories/edit/${rowProps.item.prestoId}`"
+                target="_blank"
+              >{{rowProps.item.prestoId}}</a>
+            </td>
             <td>...</td>
           </template>
         </List>
@@ -177,116 +177,118 @@ export default {
             id: 1,
             slug:
               "Socialism' in Prospect? Residents angry over new affordable housing plan",
-            request_date: "5/1/2019 12:23",
-            reporter_name: "",
-            reporter_cell: "",
-            reporter_email: "",
-            photographer_name: "",
-            photographer_cell: "",
-            photographer_email: "",
-            contact_name: "",
-            contact_cell: "",
-            location_notes: "",
-            location_address: "",
-            description: "",
-            presto_id: 1806125001,
-            initial_request_date: "5/1/2019 12:23",
-            last_update: "",
-            status: "",
+            requestDate: "5/1/2019 12:23",
+            reporterName: "Sarah Ladd",
+            reporterCell: "502-284-3948",
+            reporterEmail: "slad@gannett.com",
+            photographerName: "",
+            photographerCell: "",
+            photographerEmail: "",
+            contactName: "John Doe",
+            contactCell: "502-123-4567",
+            locationNotes: "Prospect Housing Project",
+            locationAddress: "7412 Shadwell Ln\nProspect, KY 40059",
+            description:
+              "Take a picture inside the house. Reporter will be present",
+            prestoId: 1806125001,
+            initialRequest_date: "5/1/2019 12:23",
+            lastUpdate: "",
+            status: "initial",
             urgent: 0,
-            decline_reason: ""
+            declineReason: ""
           },
           {
             id: 2,
             slug:
               "Havana Rumba, other St. Matthews businesses closed for 'roofing issues'\n",
-            request_date: "6/12/2019 15:43",
-            reporter_name: "",
-            reporter_cell: "",
-            reporter_email: "",
-            photographer_name: "",
-            photographer_cell: "",
-            photographer_email: "",
-            contact_name: "",
-            contact_cell: "",
-            location_notes: "",
-            location_address: "",
-            description: "",
-            presto_id: 1842611001,
-            initial_request_date: "6/12/2019 15:43",
-            last_update: "",
-            status: "",
+            requestDate: "6/12/2019 15:43",
+            reporterName: "Ben Tobin",
+            reporterCell: "502-393-3928",
+            reporterEmail: "btobin@gannett.com",
+            photographerName: "Matt Stone",
+            photographerCell: "502-393-4959",
+            photographerEmail: "msstone@gannett.com",
+            contactName: "Jane Doe",
+            contactCell: "502-193-4958",
+            locationNotes: "Havana Rumba Shopping center",
+            locationAddress: "4115 Oechsli Ave, Louisville, KY 40207",
+            description: "Exterior shots of the roof collapsing",
+            prestoId: 1842611001,
+            initialRequest_date: "6/12/2019 15:43",
+            lastUpdate: "",
+            status: "touched",
             urgent: 0,
-            decline_reason: ""
+            declineReason: ""
           },
           {
             id: 3,
             slug:
               "$250 million Sandmann lawsuit against Washington Post dismissed by federal judge",
-            request_date: "7/15/2019 11:00",
-            reporter_name: "",
-            reporter_cell: "",
-            reporter_email: "",
-            photographer_name: "",
-            photographer_cell: "",
-            photographer_email: "",
-            contact_name: "",
-            contact_cell: "",
-            location_notes: "",
-            location_address: "",
-            description: "",
-            presto_id: 1841901001,
-            initial_request_date: "7/15/2019 11:00",
-            last_update: "",
-            status: "",
-            urgent: 0,
-            decline_reason: ""
+            requestDate: "7/15/2019 11:00",
+            reporterName: "Max Londburg",
+            reporterCell: "502-193-3949",
+            reporterEmail: "mlondburg@gannett.com",
+            photographerName: "Dustin Strupp",
+            photographerCell: "502-201-3948",
+            photographerEmail: "dstrupp@gannett.com",
+            contactName: "Jim Porter",
+            contactCell: "502-392-3938",
+            locationNotes: "Photo of Sandmann",
+            locationAddress: "Cincinnati, OH 45202",
+            description: "Photo of the family.",
+            prestoId: 1841901001,
+            initialRequest_date: "7/15/2019 11:00",
+            lastUpdate: "",
+            status: "assigned",
+            urgent: 1,
+            declineReason: ""
           },
           {
             id: 4,
             slug:
               "Noche Mexican BBQ might just be the church of tacos in Louisville\n",
-            request_date: "6/29/2019 18:54",
-            reporter_name: "",
-            reporter_cell: "",
-            reporter_email: "",
-            photographer_name: "",
-            photographer_cell: "",
-            photographer_email: "",
-            contact_name: "",
-            contact_cell: "",
-            location_notes: "",
-            location_address: "",
-            description: "",
-            presto_id: 1806731001,
-            initial_request_date: "6/29/2019 18:54",
-            last_update: "",
-            status: "",
+            requestDate: "6/29/2019 18:54",
+            reporterName: "Savanah Edans",
+            reporterCell: "502-193-4959",
+            reporterEmail: "sedans@gannett.com",
+            photographerName: "Pat McDonogh",
+            photographerCell: "502-393-1939",
+            photographerEmail: "pmddonogh@gannett.com",
+            contactName: "Ralph Feinstein",
+            contactCell: "502-393-3980",
+            locationNotes: "Noche",
+            locationAddress:
+              "1838 Bardstown Rd Suite 100, Louisville, KY 40205",
+            description: "Get some pics of the tacos. Don't forget the guac!",
+            prestoId: 1806731001,
+            initialRequest_date: "6/29/2019 18:54",
+            lastUpdate: "",
+            status: "touched",
             urgent: 0,
-            decline_reason: ""
+            declineReason: ""
           },
           {
             id: 5,
             slug:
               "Bats in the basement: Reds' farm club owns worst record in Triple-A over last decade",
-            request_date: "7/2/2019 14:30",
-            reporter_name: "Tim Sullivan",
-            reporter_cell: "",
-            reporter_email: "",
-            photographer_name: "",
-            photographer_cell: "",
-            photographer_email: "",
-            contact_name: "",
-            contact_cell: "",
-            location_notes: "",
-            location_address: "",
-            description: "",
-            presto_id: 1806984001,
-            initial_request_date: "7/2/2019 14:30",
-            last_update: "",
-            status: "",
+            requestDate: "7/2/2019 14:30",
+            reporterName: "Tim Sullivan",
+            reporterCell: "502-201-3948",
+            reporterEmail: "tsullivan@gannett.com",
+            photographerName: "Sam Upshaw",
+            photographerCell: "502-193-3948",
+            photographerEmail: "supshaw@gannett.com",
+            contactName: "Roy McDugal",
+            contactCell: "502-393-3918",
+            locationNotes: "Slugger Field",
+            locationAddress: "401 E Main St, Louisville, KY 40202",
+            description: "Snap a pic of someone hitting a baseball",
+            prestoId: 1806984001,
+            initialRequest_date: "7/2/2019 14:30",
+            lastUpdate: "",
+            status: "assigned",
             urgent: 0,
-            decline_reason: ""
+            declineReason: ""
           }
         ]
       },

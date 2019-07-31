@@ -4,11 +4,24 @@
 
     <List
       :header="list.header"
+      :loading="list.loading"
       :groupby="list.groupby"
       :data="list.data"
-      :editable="list.editable"
       @edit="editRecord"
-    />
+    >
+      <template v-slot:row="rowProps">
+        <td>{{rowProps.item.name}}</td>
+        <td>{{rowProps.item.contactPerson}}</td>
+        <td>
+          {{rowProps.item.phone}}
+          <span v-if="rowProps.item.ext">(x{{rowProps.item.ext}})</span>
+        </td>
+        <td>
+          <a :href="`mailto:${rowProps.item.email}`">{{rowProps.item.email}}</a>
+        </td>
+        <td @click="rowProps.editItem(rowProps.item.id)">...</td>
+      </template>
+    </List>
 
     <Modal
       v-if="modal.show"
@@ -88,14 +101,15 @@ export default {
         newButton: "New Contact"
       },
       list: {
+        loading: true,
         header: [
-          { label: "Position", width: 20, key: "name" },
-          { label: "Contact Person", width: 30, key: "contactPerson" },
-          { label: "Phone", width: 20, key: "phone" },
-          { label: "Email", width: 25, key: "email" }
+          { label: "Position", width: 20 },
+          { label: "Contact Person", width: 30 },
+          { label: "Phone", width: 20 },
+          { label: "Email", width: 25 },
+          { label: "More", width: 5 }
         ],
         groupby: "category",
-        editable: true,
         data: null
       },
       modal: {
@@ -110,10 +124,12 @@ export default {
   },
   methods: {
     getRecords() {
+      this.list.loading = true;
       fetch(`${baseUrl}/contacts/get-list`)
         .then(res => res.json())
         .then(data => {
           this.list.data = data;
+          this.list.loading = false;
         })
         .catch(err => {
           console.log("Error fetching contacts list");
@@ -128,6 +144,7 @@ export default {
       this.modal.show = true;
     },
     editRecord(id) {
+      console.log('fired');
       this.openModal("Edit Contact Info");
       this.modal.data = this.list.data.filter(n => n.id === id)[0];
     },

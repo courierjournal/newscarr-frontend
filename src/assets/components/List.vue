@@ -1,27 +1,25 @@
 <template>
   <div class="table-container">
-    <CircleLoader v-if="data === null" />
+    <CircleLoader v-if="loading" />
     <section v-for="(categoryGroup,index) in categorizedList" :key="index">
       <h4 v-if="groupby">{{categoryGroup.category}}</h4>
       <table>
-        <colgroup>
-          <col v-for="(column,index) in header" :key="index" :style="{width:column.width+'%'}" />
-          <col v-if="editable" style="width:5%" />
-        </colgroup>
         <thead>
           <tr>
-            <th v-for="(column,index) in header" :key="index">{{column.label}}</th>
-            <th v-if="editable">More</th>
+            <slot name="head">
+              <th
+                v-for="(column,index) in header"
+                :key="index"
+                :style="{width:column.width+'%'}"
+              >{{column.label}}</th>
+            </slot>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in categoryGroup.entries" :key="index">
-            <td
-              v-for="(column, index) in header"
-              :key="index"
-              v-html="formatHyperlink(item[column.key])"
-            ></td>
-            <td v-if="editable" class="edit-cell" @click="editRecord(item.id)"><img class="edit-icon" src="img/edit.svg"></td>
+            <slot name="row" :item="item" :editItem="editItem">
+              <td v-for="(column, index) in header" :key="index">{{item[column.key]}}</td>
+            </slot>
           </tr>
         </tbody>
       </table>
@@ -36,7 +34,12 @@ import CircleLoader from "@/assets/components/CircleLoader";
 export default {
   name: "List",
   components: { CircleLoader },
-  props: { header: Array, groupby: String, data: Array, editable: Boolean },
+  props: {
+    loading: Boolean,
+    header: Array,
+    groupby: String,
+    data: Array
+  },
   computed: {
     categorizedList() {
       if (this.groupby) {
@@ -45,7 +48,7 @@ export default {
           .map((value, key) => ({ category: key, entries: value }))
           .value();
       } else {
-        return { category: "", entries: this.data };
+        return [{ category: "", entries: this.data }];
       }
     }
   },
@@ -61,7 +64,7 @@ export default {
       }
       return val;
     },
-    editRecord(index) {
+    editItem(index) {
       this.$emit("edit", index);
     }
   }
@@ -121,18 +124,18 @@ h4 {
   color: #2196f3;
 }
 
-.edit-cell{
-  text-align:center;
-  cursor:pointer;
+.edit-cell {
+  text-align: center;
+  cursor: pointer;
 }
 
-.edit-cell:hover>.edit-icon{
-  transform:scale(1.1,1.1);
+.edit-cell:hover > .edit-icon {
+  transform: scale(1.1, 1.1);
 }
 
-.edit-icon{
-  max-width:20px;
-  transition: transform .3s;
-  transform:scale(1,1);
+.edit-icon {
+  max-width: 20px;
+  transition: transform 0.3s;
+  transform: scale(1, 1);
 }
 </style>

@@ -44,7 +44,6 @@ export default {
 </script>
 
 <style  scoped>
-
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -73,12 +72,6 @@ export default {
   transition: all 0.3s ease;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #555;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-}
 
 .modal-body {
   margin: 20px 0;
@@ -89,20 +82,20 @@ export default {
   align-items: center;
 }
 
-.modal-footer-done-container{
-  margin-left:auto;
+.modal-footer-done-container {
+  margin-left: auto;
 }
 
 .modal-default-button {
-  margin:0 .5em;
+  margin: 0 0.5em;
 }
 
-.modal-default-button.delete{
-  background-color:#f44336
+.modal-default-button.delete {
+  background-color: #f44336;
 }
 
-.modal-default-button.save{
-  background-color:#f57c00
+.modal-default-button.save {
+  background-color: #f57c00;
 }
 
 .modal-enter {
@@ -142,6 +135,9 @@ export default {
 
 .modal-title {
   margin: 0;
+  font-family: lato;
+  font-size: 1.3rem;
+  color: #3f6fa5;
 }
 
 .modal-close-container {

@@ -1,11 +1,13 @@
 <template>
   <div class="header">
     <div class="header-bar">
-      <h2 class="app-title">{{title}}</h2>
+      <h2 class="app-title">
+        <slot name="title">{{$route.meta.title}}</slot>
+      </h2>
+
       <div>
         <button v-if="newButton" class="btn" @click="$emit('new')">{{newButton}}</button>
         <input
-          v-if="searchText"
           class="input-search"
           type="text"
           :value="searchText"
@@ -14,7 +16,9 @@
         />
       </div>
     </div>
-    <p v-if="description" class="description">{{description}}</p>
+    <div class="description">
+      <slot name="description">{{$route.meta.description}}</slot>
+    </div>
   </div>
 </template>
 

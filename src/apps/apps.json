@@ -1,27 +1,27 @@
 [
   {
-    "name": "Contacts",
+    "title": "Contacts",
     "path": "/contacts",
     "component": "Contacts/Contacts.vue",
-    "description": "A quick list of frequently used contacts",
+    "description": "A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing.",
     "icon": "contacts.png"
   },
   {
-    "name": "Bookmarks",
+    "title": "Bookmarks",
     "path": "/bookmarks",
     "component": "Bookmarks/index.vue",
-    "description": "A quick list of frequently used websites",
+    "description": "A list of frequently used websites",
     "icon": "bookmarks.png"
   },
   {
-    "name": "Voter Registration Database",
-    "path": "/voter-registration-database",
-    "component": "VoterRegistrationDatabase/VoterRegistrationDatabase.vue",
-    "description": "Lookup tool for KY voter registration data",
-    "icon": "voter.png"
+    "title": "Photo Budget",
+    "path": "/photo-budget",
+    "component": "PhotoBudget/PhotoBudget.vue",
+    "description": "Budgeting tool for the photo team. If you're a reporter looking to put in a request, click 'New Request' in the corner.",
+    "icon": "camera.png"
   },
   {
-    "name": "Gun Violence Database",
+    "title": "Gun Violence Database",
     "path": "/gun-violence-database",
     "component": "GunViolenceDatabase/index.vue",
     "description": "Admin panel for the gun violence database",

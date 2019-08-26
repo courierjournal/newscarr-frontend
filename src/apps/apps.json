@@ -1,5 +1,12 @@
 [
   {
+    "title": "Test",
+    "path": "/test",
+    "component": "Test/Test.vue",
+    "description": "Vanilla app for showcasing and testing various components. This should not be visible in the public distribution.",
+    "icon": "test.png"
+  },
+  {
     "title": "Contacts",
     "path": "/contacts",
     "component": "Contacts/Contacts.vue",

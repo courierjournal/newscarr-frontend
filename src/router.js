@@ -15,6 +15,11 @@ let routes = apps.map(n => {
   };
 });
 
+//Remove the 'Test' app if we're in production
+if (process.env.NODE_ENV === "production") {
+  routes.shift();
+}
+
 //Make sure we push the home component as the first route available
 routes.unshift({
   path: "/",

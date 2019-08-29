@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .table-container {
   max-width: 960px;
   width: 100%;
@@ -89,6 +89,7 @@ table {
 
 thead {
   color: rgba(0, 0, 0, 0.6);
+  background-color: #fafafa;
 }
 
 tr {
@@ -105,7 +106,6 @@ th {
   display: table-cell;
   text-align: left;
   vertical-align: middle;
-  border-radius: 2px;
 }
 
 td {
@@ -114,7 +114,7 @@ td {
   overflow: hidden;
 }
 
-td.overflow{
+td.overflow {
   white-space: initial;
 }
 

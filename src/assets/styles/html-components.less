@@ -1,0 +1,57 @@
+/**********************************************/
+/* Styles for generic HTML components go here */
+/**********************************************/
+
+/* Link */
+a,
+a:visited {
+  text-decoration: none;
+  color: @blue-primary;
+  border-bottom: 1px dotted @blue-primary;
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: @blue-dark;
+  border-color: @blue-dark;
+}
+
+/* Button */
+button {
+  border: 0;
+  background-color: @blue-primary;
+  color: white;
+  padding: 8px 1em;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: @blue-dark;
+}
+
+button.danger{
+  background-color: @red-primary;
+}
+
+button.danger:hover{
+  background-color: @red-dark;
+}
+
+button.success{
+  background-color: @green-primary;
+}
+
+button.success:hover{
+  background-color: @green-dark;
+}
+
+
+/* Horizontal Rule */
+hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin: 1rem auto;
+}

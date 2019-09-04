@@ -2,7 +2,7 @@ import Notification from "./Notification";
 import Vue from "vue";
 
 //Track all instances of notifications currently open
-const notificationState = [];
+let notificationState = [];
 
 //Set default values
 const durationDefault = 4500;
@@ -24,12 +24,16 @@ notificationInstance.$mount("#notification-container").$on("close", key => {
 
 //Create a new notification
 function newNotification(args) {
+  if (typeof args === "string") {
+    args = {
+      message: args
+    };
+  }
   args.key = args.key || new Date().getTime();
   args.duration = args.duration || durationDefault;
   args.type = args.type || typeDefault;
   args._timer = setTimer(args.key, args.duration);
   notificationState.push(args);
-  console.log("notification opened");
 }
 
 //Set a timer to kill the notification after the specified duration
@@ -44,7 +48,6 @@ function closeNotification(key) {
   let i = notificationState.findIndex(n => key === n.key);
   clearTimeout(notificationState[i]._timer);
   notificationState.splice(i, 1);
-  console.log("notification closed");
 }
 
 const api = {

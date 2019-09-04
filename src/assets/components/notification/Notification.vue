@@ -1,15 +1,17 @@
 <template>
   <div class="notification-container-outer">
-    <transition-group name="notification">
+    <transition-group name="notification" tag="div">
       <div
-        class="notification"
+        class="notification-item"
         :class="notification.type"
-        v-for="(notification, index) in notificationState"
-        :key="index"
+        v-for="notification in notificationState"
+        :key="notification.key"
       >
-        <div class="notification-title">{{notification.title}}</div>
-        <div class="notification-message">{{notification.message}}</div>
-        <div class="close" @click="$emit('close', notification.key)">X</div>
+        <div class="notification-content">
+          <div v-if="notification.title" class="notification-title">{{notification.title}}</div>
+          <div class="notification-message">{{notification.message}}</div>
+        </div>
+        <div class="close" @click="$emit('close', notification.key)">×</div>
       </div>
     </transition-group>
   </div>
@@ -39,8 +41,7 @@ export default {
   margin-right: 24px;
 }
 
-.notification {
-  padding: 16px 24px;
+.notification-item {
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   background: #fff;
@@ -50,36 +51,71 @@ export default {
   overflow: hidden;
   border-left: 5px solid #ccc;
   max-height: 150px;
+  transition: all 0.3s;
+  display: block;
+  width: 100%;
+  display: flex;
+  font-size: 14px;
 }
 
-.notification.primary {
+.notification-item.primary {
   border-left-color: @blue-primary;
 }
 
-.notification.danger {
+.notification-item.danger {
   border-left-color: @red-primary;
 }
 
-.notification.success {
+.notification-item.success {
   border-left-color: @green-primary;
 }
 
-.notification-item {
-  display: inline-block;
-  margin-right: 10px;
+.notification-content {
+  flex: 1;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 }
-.notification-enter-active, .notification-leave-active {
-  transition: all .3s;
+
+.notification-title {
+  font-weight: bold;
 }
+
+.notification-message {
+  color: #555;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  font-size: 22px;
+  color: #888;
+  transition: all 0.3s;
+}
+
+.close:hover {
+  background-color: #ddd;
+  color: #222;
+}
+
+/* Vue Animations */
 .notification-enter {
   opacity: 0;
   transform: translateX(384px);
 }
 
-.notification-leave-to{
+.notification-leave-to {
   opacity: 0;
-  max-height:0;
-  padding-top:0;
-  padding-bottom:0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.notification-leave-active {
+  position: absolute;
 }
 </style>

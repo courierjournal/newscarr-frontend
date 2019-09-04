@@ -81,9 +81,15 @@
         <h4>Notification</h4>
         <hr />
         <div>
-          <button @click="openNotification()">Basic Notification</button>
-          <button @click="openNotification('danger')" class="danger">Danger</button>
-        <button @click="openNotification('success')" class="success">Success</button>
+          <button @click="openNotification('Basic Notification')">Basic Notification</button>
+          <button
+            @click="openNotification({'title':'Notification Title', 'type': 'danger', 'message':'Failed to do the thing that you were trying to do'})"
+            class="danger"
+          >More Content</button>
+          <button
+            @click="openNotification({'title':'Notification Title', 'type': 'success', 'message':'Successfully did that thing you were trying to do', 'duration': 10000})"
+            class="success"
+          >Custom Duration</button>
         </div>
       </section>
     </div>
@@ -94,7 +100,6 @@
 import AppHeader from "@/assets/components/AppHeader";
 import List from "@/assets/components/List";
 import Modal from "@/assets/components/Modal";
-
 
 export default {
   name: "Test",
@@ -141,12 +146,8 @@ export default {
     openModal(index) {
       this.modal[index].visible = true;
     },
-    openNotification(type) {
-      this.$notification.open({
-        title: "test notification",
-        message: "",
-        type: type
-      });
+    openNotification(options) {
+      this.$notification.open(options);
     }
   }
 };

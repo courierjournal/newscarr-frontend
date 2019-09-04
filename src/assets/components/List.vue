@@ -53,17 +53,6 @@ export default {
     }
   },
   methods: {
-    formatHyperlink(val) {
-      if (typeof val === "string") {
-        if (val.substr(0, 4) === "http") {
-          return `<a href="${val}" target="_blank">${val}</a>`;
-        }
-        if (val.indexOf("@") > 0 && val.indexOf(" ") === -1) {
-          return `<a href="mailto:${val}">${val}</a>`;
-        }
-      }
-      return val;
-    },
     editItem(index) {
       this.$emit("edit", index);
     }
@@ -73,7 +62,6 @@ export default {
 
 <style lang="less" scoped>
 .table-container {
-  max-width: 960px;
   width: 100%;
   margin: 0 auto;
   margin-top: 30px;

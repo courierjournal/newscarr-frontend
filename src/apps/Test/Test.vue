@@ -2,6 +2,7 @@
   <div class="app-container">
     <AppHeader />
     <div class="inner">
+      <!-- BUTTON -->
       <section>
         <h4>Buttons</h4>
         <hr />
@@ -10,6 +11,7 @@
         <button class="success">Success</button>
       </section>
 
+      <!-- DATA TABLE -->
       <section>
         <h4>Data Table</h4>
         <hr />
@@ -19,8 +21,20 @@
           <span class="inline">:data</span>
         </div>
         <List :header="list.header" :data="list.data" />
+
+        <div>Advanced table with scoped slots</div>
+        <List :header="list.header" :data="list.data">
+          <template v-slot:row="rowProps">
+            <td>{{rowProps.item.name}}</td>
+            <td>{{rowProps.item.age}}</td>
+            <td>
+              <a :href="`mailto:${rowProps.item.height}`">{{rowProps.item.height}}</a>
+            </td>
+          </template>
+        </List>
       </section>
 
+      <!-- MODAL -->
       <section>
         <h4>Modal</h4>
         <hr />
@@ -51,11 +65,7 @@
             </template>
           </Modal>
 
-          <Modal
-            :visible="modal[2].visible"
-            size="small"
-            @close="modal[2].visible = false"
-          >
+          <Modal :visible="modal[2].visible" size="small" @close="modal[2].visible = false">
             <div>Advanced Modal</div>
             <div>
               prop
@@ -63,6 +73,17 @@
             </div>
             <div>Test!</div>
           </Modal>
+        </div>
+      </section>
+
+      <!-- NOTIFICATION -->
+      <section>
+        <h4>Notification</h4>
+        <hr />
+        <div>
+          <button @click="openNotification()">Basic Notification</button>
+          <button @click="openNotification('danger')" class="danger">Danger</button>
+        <button @click="openNotification('success')" class="success">Success</button>
         </div>
       </section>
     </div>
@@ -73,6 +94,7 @@
 import AppHeader from "@/assets/components/AppHeader";
 import List from "@/assets/components/List";
 import Modal from "@/assets/components/Modal";
+
 
 export default {
   name: "Test",
@@ -86,10 +108,20 @@ export default {
           { label: "Age", key: "age" },
           { label: "Height", key: "height" }
         ],
-        groupby: "category",
         data: [
-          { name: "Jesse Hazel", age: 37, height: "6'3" },
-          { name: "Chris Feldmann", age: 34, height: "5'8" }
+          { name: "Jesse Hazel", age: 37, height: "6'3", category: "active" },
+          {
+            name: "Chris Feldmann",
+            age: 34,
+            height: "5'8",
+            category: "not active"
+          },
+          {
+            name: "Jeff Faughender",
+            age: 50,
+            height: "6'0",
+            category: "active"
+          }
         ]
       },
       modal: [
@@ -108,6 +140,13 @@ export default {
   methods: {
     openModal(index) {
       this.modal[index].visible = true;
+    },
+    openNotification(type) {
+      this.$notification.open({
+        title: "test notification",
+        message: "",
+        type: type
+      });
     }
   }
 };

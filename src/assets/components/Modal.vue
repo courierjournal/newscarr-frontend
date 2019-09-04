@@ -32,11 +32,14 @@ export default {
   name: "Modal",
   props: { visible: Boolean, title: String, size: String },
   components: {},
-  mounted() {
-    document.querySelector("body").classList.add("modal-active");
-  },
-  destroyed() {
-    document.querySelector("body").classList.remove("modal-active");
+  watch: {
+    visible: function() {
+      if (this.visible) {
+        document.querySelector("body").classList.add("modal-active");
+      } else {
+        document.querySelector("body").classList.remove("modal-active");
+      }
+    }
   }
 };
 </script>

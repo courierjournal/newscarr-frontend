@@ -1,0 +1,54 @@
+import Notification from "./Notification";
+import Vue from "vue";
+
+//Track all instances of notifications currently open
+const notificationState = [];
+
+//Set default values
+const durationDefault = 4500;
+const typeDefault = "primary";
+
+//Create a component container for the notification to bind to
+const notificationContainer = document.createElement("div");
+notificationContainer.id = "notification-container";
+document.body.appendChild(notificationContainer);
+
+//Extend the notification SFC as a class and mount it to the container
+const ComponentClass = Vue.extend(Notification);
+var notificationInstance = new ComponentClass({
+  data: { notificationState }
+});
+notificationInstance.$mount("#notification-container").$on("close", key => {
+  closeNotification(key);
+});
+
+//Create a new notification
+function newNotification(args) {
+  args.key = args.key || new Date().getTime();
+  args.duration = args.duration || durationDefault;
+  args.type = args.type || typeDefault;
+  args._timer = setTimer(args.key, args.duration);
+  notificationState.push(args);
+  console.log("notification opened");
+}
+
+//Set a timer to kill the notification after the specified duration
+function setTimer(key, duration) {
+  return setTimeout(() => {
+    closeNotification(key);
+  }, duration);
+}
+
+//Remove the notification from state
+function closeNotification(key) {
+  let i = notificationState.findIndex(n => key === n.key);
+  clearTimeout(notificationState[i]._timer);
+  notificationState.splice(i, 1);
+  console.log("notification closed");
+}
+
+const api = {
+  open: newNotification,
+  close: closeNotification
+};
+export default api;

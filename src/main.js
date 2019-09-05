@@ -4,7 +4,7 @@ import router from "./router";
 import "@/assets/styles/main.less";
 
 import { default as notification } from "@/assets/components/notification/index.js";
-
+import Icon from "@/assets/components/icons/Icon";
 Vue.config.productionTip = false;
 
 new Vue({
@@ -13,3 +13,4 @@ new Vue({
 }).$mount("#app");
 
 Vue.prototype.$notification = notification;
+Vue.component('Icon', Icon);

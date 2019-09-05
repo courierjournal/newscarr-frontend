@@ -32,26 +32,64 @@ button:hover {
   background-color: @blue-dark;
 }
 
-button.danger{
+button.danger {
   background-color: @red-primary;
 }
 
-button.danger:hover{
+button.danger:hover {
   background-color: @red-dark;
 }
 
-button.success{
+button.success {
   background-color: @green-primary;
 }
 
-button.success:hover{
+button.success:hover {
   background-color: @green-dark;
 }
-
 
 /* Horizontal Rule */
 hr {
   border: none;
   border-bottom: 1px solid #ddd;
   margin: 1rem auto;
+}
+
+/* Label */
+label {
+  font-size: 14px;
+  font-family: "Avenir";
+  font-weight: bold;
+}
+
+/* Input */
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #edf2f7;
+  background-clip: padding-box;
+  border: 1px solid #d9d9d9;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: @blue-primary;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #40a9ff;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  border-right-width: 1px !important;
 }

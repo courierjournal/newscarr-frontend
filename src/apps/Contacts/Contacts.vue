@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <AppHeader :new-button="header.newButton" @new="newRecord" @search="searchRecords" />
+    <AppHeader />
 
     <List
       :header="list.header"
@@ -19,7 +19,7 @@
         <td>
           <a :href="`mailto:${rowProps.item.email}`">{{rowProps.item.email}}</a>
         </td>
-        <td @click="rowProps.editItem(rowProps.item.id)">...</td>
+        <td @click="rowProps.editItem(rowProps.item.id)">…</td>
       </template>
     </List>
 
@@ -144,7 +144,7 @@ export default {
       this.modal.show = true;
     },
     editRecord(id) {
-      console.log('fired');
+      console.log("fired");
       this.openModal("Edit Contact Info");
       this.modal.data = this.list.data.filter(n => n.id === id)[0];
     },

@@ -92,6 +92,124 @@
           >Custom Duration</button>
         </div>
       </section>
+
+      <!-- FORM -->
+      <section>
+        <h4>Form Elements</h4>
+        <hr />
+        <div>
+          <form>
+            <div>
+              <input type="text" />
+            </div>
+            <div>
+              <select>
+                <option>One</option>
+                <option>Two</option>
+              </select>
+            </div>
+            <div>
+              <textarea></textarea>
+            </div>
+          </form>
+        </div>
+        <div>
+          <button @click="openModal(3)">Form in modal</button>
+          <Modal :visible="modal[3].visible" title="Form Modal" size="large" @close="modal[3].visible = false">
+            <div class="row">
+              <div class="col-md-7 form-group">
+                <label>Story Title</label>
+                <input type="text" class="form-control" required />
+              </div>
+              <div class="col-md-3 form-group">
+                <label>Presto ID</label>
+                <input class="form-control" type="text" />
+              </div>
+              <div class="col-md-2 form-group">
+                <label>Urgent</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label>Contact Name</label>
+                <input class="form-control" type="text" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Contact Cell</label>
+                <input class="form-control" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Request Date + Time</label>
+                <input type="datetime-local" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label>Reporter Name</label>
+                <input class="form-control" type="text" list="datalist-reporter-name" />
+                <datalist id="datalist-reporter-name"></datalist>
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Reporter Cell</label>
+                <input class="form-control" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Reporter Email</label>
+                <input class="form-control" type="email" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label>Location</label>
+                <textarea class="form-control"></textarea>
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Address</label>
+                <textarea class="form-control"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label>Notes</label>
+                <textarea class="form-control" rows="4"></textarea>
+              </div>
+            </div>
+            <div v-if="modal.modalType=='admin'">
+              <hr />
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label>Photographer Name</label>
+                  <input class="form-control" type="text" />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label>Photographer Cell</label>
+                  <input class="form-control" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+                </div>
+                <div class="col-md-4 form-group">
+                  <label>Photographer Email</label>
+                  <input class="form-control" type="email" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label>Decline Reason</label>
+                  <textarea class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </section>
+
+      <!-- SWITCH -->
+      <section>
+        <h4>Switch</h4>
+        <hr />
+        <div>
+          <Switch />
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -100,6 +218,7 @@
 import AppHeader from "@/assets/components/AppHeader";
 import List from "@/assets/components/List";
 import Modal from "@/assets/components/Modal";
+//import Switch from "@/assets/components/Switch";
 
 export default {
   name: "Test",
@@ -130,6 +249,9 @@ export default {
         ]
       },
       modal: [
+        {
+          visible: false
+        },
         {
           visible: false
         },
@@ -170,5 +292,9 @@ button {
   background-color: #eee;
   padding: 2px 8px;
   color: #555;
+}
+
+form > div {
+  padding: 1em;
 }
 </style>

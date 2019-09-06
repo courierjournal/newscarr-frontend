@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in categoryGroup.entries" :key="index">
-            <slot name="row" :item="item" :editItem="editItem">
+            <slot name="row" :item="item">
               <td v-for="(column, index) in header" :key="index">{{item[column.key]}}</td>
             </slot>
           </tr>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import _ from "lodash";
+
 import CircleLoader from "@/assets/components/CircleLoader";
 
 export default {
@@ -53,9 +53,7 @@ export default {
     }
   },
   methods: {
-    editItem(index) {
-      this.$emit("edit", index);
-    }
+    
   }
 };
 </script>
@@ -113,7 +111,12 @@ section {
 h4 {
   font-size: 1.5em;
   text-transform: uppercase;
-  color: #2196f3;
+  font-family: Lato;
+  font-weight: 300;
+  border-left: 6px solid #2196f3;
+  padding-left: 8px;
+  color: #111;
+  margin-left: -10px;
 }
 
 .edit-cell {

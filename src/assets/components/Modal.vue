@@ -83,6 +83,7 @@ export default {
 
 .modal-body {
   padding: 24px;
+  font-size:14px;
 }
 
 .modal-footer {

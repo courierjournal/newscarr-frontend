@@ -1,16 +1,18 @@
 /*
-Using this for now while we decide on how best to handle icons in this happ
+Using this for now while we decide on how best to handle icons in this app
 */
 .icon-more {
   padding: 5px;
   cursor: pointer;
-  transition: all 0.3s;
+  text-align: center !important;
 }
 .icon-more:after {
-  content: "…";
+  content: "⇪";
 }
 
 .icon-more:hover {
-  color: @blue-primary;
-  background-color: #eee;
+  color: #fff;
+  background-color: @blue-primary;
+  border-top: 1px solid @blue-primary;
+  border-bottom: 1px solid @blue-primary;
 }

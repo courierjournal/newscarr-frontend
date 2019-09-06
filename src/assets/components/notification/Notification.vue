@@ -33,7 +33,7 @@ export default {
 
 .notification-container-outer {
   position: fixed;
-  z-index: 1080;
+  z-index: 9999;
   top: 20px;
   right: 20px;
   width: 384px;

@@ -1,7 +1,11 @@
 <template>
   <div class="table-container">
     <CircleLoader v-if="loading" />
-    <section v-for="(categoryGroup,index) in categorizedList" :key="index">
+    <div class="control-bar">
+      <button @click="$emit('new')">+</button>
+      <input type="text" @keyup="$emit('search', searchQuery)" v-model="searchQuery" />
+    </div>
+    <section v-for="(categoryGroup,index) in categorizedDataTable" :key="index">
       <h4 v-if="groupby">{{categoryGroup.category}}</h4>
       <table>
         <thead>
@@ -28,11 +32,10 @@
 </template>
 
 <script>
-
 import CircleLoader from "@/assets/components/CircleLoader";
 
 export default {
-  name: "List",
+  name: "DataTable",
   components: { CircleLoader },
   props: {
     loading: Boolean,
@@ -40,8 +43,13 @@ export default {
     groupby: String,
     data: Array
   },
+  data() {
+    return {
+      searchQuery: ""
+    };
+  },
   computed: {
-    categorizedList() {
+    categorizedDataTable() {
       if (this.groupby) {
         return _(this.data)
           .groupBy(x => x[this.groupby])
@@ -52,9 +60,7 @@ export default {
       }
     }
   },
-  methods: {
-    
-  }
+  methods: {}
 };
 </script>
 

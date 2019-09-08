@@ -8,24 +8,19 @@
       @search="searchRecords"
     />
 
-    <List :header="list.header" :groupby="list.groupby" :data="list.data" @edit="editRecord"/>
-    <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
-      <p>Modal Data Goes Here</p>
-      <p>Debug:</p>
-      <pre>{{modal.data}}</pre>
-    </Modal>
+   
   </div>
 </template>
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
-import List from "@/assets/components/List";
+import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
 import { baseUrl } from "@/assets/libs/baseUrl";
 
 export default {
   name: "Contacts",
-  components: { AppHeader, List, Modal },
+  components: { AppHeader, DataTable, Modal },
   data() {
     return {
       header: {
@@ -47,10 +42,10 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getDataTable();
   },
   methods: {
-    getList() {
+    getDataTable() {
       fetch(`${baseUrl}/bookmarks/get-list`)
         .then(res => res.json())
         .then(data => {

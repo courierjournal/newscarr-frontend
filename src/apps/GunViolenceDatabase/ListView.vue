@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "ListView",
+  name: "DataTableView",
   props: { list: Array },
   computed: {},
   methods: {

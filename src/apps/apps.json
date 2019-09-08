@@ -10,7 +10,7 @@
     "title": "Contacts",
     "path": "/contacts",
     "component": "Contacts/Contacts.vue",
-    "description": "A collection of commonly used phone and email addresses sorted by category. Click on a row to see more contact info including cell/alternate # as well as notes. This is a staff curated list, so please update any records you notice are incorrect/out of date or add new contacts that you notice are missing.",
+    "description": "A collection of commonly used phone and email addresses.",
     "icon": "contacts.png"
   },
   {

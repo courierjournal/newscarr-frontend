@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
     <AppHeaderSearch title="Gun Violence Database Admin" new-button="New Incident"/>
-    <ListView :list="incidentList" @editRecord="editRecord"/>
+    <ListView :list="incidentDataTable" @editRecord="editRecord"/>
     <modal v-if="showModal" :record="recordModel" @close="closeModal"/>
   </div>
 </template>
 
 <script>
-import ListView from "./ListView";
+import DataTableView from "./ListView";
 import Modal from "./Modal";
 import AppHeaderSearch from "@/assets/components/AppHeader";
 import { baseUrl } from "@/assets/libs/baseUrl.js";
@@ -17,20 +17,20 @@ export default {
   components: { ListView, AppHeaderSearch, Modal },
   data() {
     return {
-      incidentList: [],
+      incidentDataTable: [],
       recordModel: { incident: {}, victims: [], suspects: [] },
       showModal: false
     };
   },
   created() {
-    this.getList();
+    this.getDataTable();
   },
   methods: {
-    getList() {
+    getDataTable() {
       fetch(`${baseUrl}/gun-violence-database/get-list`)
         .then(res => res.json())
         .then(data => {
-          this.incidentList = data;
+          this.incidentDataTable = data;
         })
         .catch(err => {});
     },

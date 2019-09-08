@@ -69,10 +69,10 @@ export default {
     }
   },
   mounted() {
-    document.querySelector("body").classList.add("modal-active");
+    document.querySelector("body").classDataTable.add("modal-active");
   },
   destroyed() {
-    document.querySelector("body").classList.remove("modal-active");
+    document.querySelector("body").classDataTable.remove("modal-active");
   }
 };
 </script>

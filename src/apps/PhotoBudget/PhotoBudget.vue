@@ -3,11 +3,11 @@
     <AppHeader :new-button="'New Request'" @new="newRecord" />
     <div class="app-body">
       <div id="menu-bar">
-        <button @click="viewState='list'">List</button>
+        <button @click="viewState='list'">DataTable</button>
         <button @click="viewState='calendar'">Calendar</button>
       </div>
       <div id="list-container" v-if="viewState==='list'">
-        <List :header="list.header" :loading="list.loading" :data="list.data">
+        <DataTable :header="list.header" :loading="list.loading" :data="list.data">
           <template v-slot:row="rowProps">
             <td>{{rowProps.item.photographerName}}</td>
             <td>{{rowProps.item.reporterName}}</td>
@@ -21,7 +21,7 @@
             </td>
             <td>...</td>
           </template>
-        </List>
+        </DataTable>
       </div>
       <div id="calendar-container" v-if="viewState==='calendar'">
         <Calendar />
@@ -151,14 +151,14 @@
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
-import List from "@/assets/components/List";
+import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
 import Calendar from "@/assets/components/Calendar";
 import { baseUrl } from "@/assets/libs/baseUrl";
 
 export default {
   name: "PhotoBudget",
-  components: { AppHeader, List, Modal, Calendar },
+  components: { AppHeader, DataTable, Modal, Calendar },
   data() {
     return {
       viewState: "list",

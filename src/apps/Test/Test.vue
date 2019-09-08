@@ -20,10 +20,10 @@
           <span class="inline">:header</span> and
           <span class="inline">:data</span>
         </div>
-        <List :header="list.header" :data="list.data" />
+        <DataTable :header="list.header" :data="list.data" />
 
         <div>Advanced table with scoped slots</div>
-        <List :header="list.header" :data="list.data">
+        <DataTable :header="list.header" :data="list.data">
           <template v-slot:row="rowProps">
             <td>{{rowProps.item.name}}</td>
             <td>{{rowProps.item.age}}</td>
@@ -31,7 +31,7 @@
               <a :href="`mailto:${rowProps.item.height}`">{{rowProps.item.height}}</a>
             </td>
           </template>
-        </List>
+        </DataTable>
       </section>
 
       <!-- MODAL -->
@@ -216,13 +216,13 @@
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
-import List from "@/assets/components/List";
+import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
 //import Switch from "@/assets/components/Switch";
 
 export default {
   name: "Test",
-  components: { AppHeader, List, Modal },
+  components: { AppHeader, DataTable, Modal },
   data() {
     return {
       list: {

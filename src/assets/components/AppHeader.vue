@@ -3,9 +3,9 @@
     <h2>
       <slot name="title">{{$route.meta.title}}</slot>
     </h2>
-    <p>
+    <div class="description">
       <slot name="description">{{$route.meta.description}}</slot>
-    </p>
+    </div>
   </header>
 </template>
 
@@ -26,7 +26,7 @@ h2 {
   font-family: Lato, sans-serif;
 }
 
-p {
+.description {
   margin: 0 auto;
   font-family: Avenir;
 }

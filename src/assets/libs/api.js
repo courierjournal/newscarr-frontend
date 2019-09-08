@@ -12,7 +12,10 @@ function _urlConstructor(path, params = {}) {
 }
 
 /**
- * Easy methods for GET, POST, and DELETE
+ * Sugar for GET(get), POST(post), and DELETE(del) fetch methods
+ * @param {string} path - relative path of endpoint
+ * @param {object} params - object of keys and values that converts to url query parameters
+ * @return {promise} a prepopulated fetch promise
  */
 export default {
   get: (path, params) => {

@@ -35,9 +35,9 @@ export default {
   watch: {
     visible: function() {
       if (this.visible) {
-        document.querySelector("body").classList.add("modal-active");
+        document.querySelector("body").classDataTable.add("modal-active");
       } else {
-        document.querySelector("body").classList.remove("modal-active");
+        document.querySelector("body").classDataTable.remove("modal-active");
       }
     }
   }

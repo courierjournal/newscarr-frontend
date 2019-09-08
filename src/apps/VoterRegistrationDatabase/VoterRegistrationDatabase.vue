@@ -2,7 +2,7 @@
   <div class="app-container">
     <AppHeader :title="header.title" :description="header.description" />
     <VoterSearch @search="search" />
-    <List
+    <DataTable
       v-if="searchInitiated"
       :header="list.header"
       :groupby="list.groupby"
@@ -20,13 +20,13 @@
 <script>
 import AppHeader from "@/assets/components/AppHeader";
 import VoterSearch from "./VoterSearch";
-import List from "@/assets/components/List";
+import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
 import { baseUrl } from "@/assets/libs/baseUrl";
 
 export default {
   name: "VoterRegistrationDatabase",
-  components: { AppHeader, VoterSearch, List, Modal },
+  components: { AppHeader, VoterSearch, DataTable, Modal },
   data() {
     return {
       header: {

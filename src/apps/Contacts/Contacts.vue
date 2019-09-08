@@ -1,13 +1,24 @@
 <template>
   <div class="app-container">
-    <AppHeader />
+    <AppHeader>
+      <template slot="description">
+        <div>
+          A collection of commonly used phone and email addresses sorted by category.
+          Click on the `More` arrow icon to see more contact info including cell/alternate # as well as notes.
+          This is a staff curated list, so please update any records you notice are incorrect/out
+          of date or add new contacts that you notice are missing.
+        </div>
+      </template>
+    </AppHeader>
 
-    <List
+    <DataTable
       :header="list.header"
       :loading="list.loading"
       :groupby="list.groupby"
-      :data="list.data"
+      :data="filteredDataTable"
       @edit="editRecord"
+      @new="newRecord"
+      @search="searchRecord"
     >
       <template v-slot:row="rowProps">
         <td>{{rowProps.item.name}}</td>
@@ -22,89 +33,105 @@
         </td>
         <td @click="editRecord(rowProps.item.id)" class="icon-more"></td>
       </template>
-    </List>
+    </DataTable>
 
     <Modal :visible="modal.show" :title="modal.title" :size="'large'" @close="closeModal">
-      <template>
-        <input type="hidden" v-model="form.data.id" />
-        <div class="row">
-          <div class="col-md-4 form-group">
-            <label>Category</label>
-            <input type="text" class="form-control" v-model="form.data.category" />
-          </div>
-          <div class="col-md-4 form-group">
-            <label>Contact Name</label>
-            <input type="text" class="form-control" v-model="form.data.contactPerson" />
-          </div>
-          <div class="col-md-4 form-group">
-            <label>Position</label>
-            <input type="text" class="form-control" v-model="form.data.name" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 form-group">
-            <label>Primary Phone #</label>
-            <input
-              class="form-control"
-              type="tel"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              v-model="form.data.phone"
-            />
-          </div>
-          <div class="col-md-2 form-group">
-            <label>Extension</label>
-            <input type="text" class="form-control" v-model="form.data.ext" />
-          </div>
-          <div class="col-md-3 form-group">
-            <label>Secondary or Cell #</label>
-            <input
-              class="form-control"
-              type="tel"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              v-model="form.data.altPhone"
-            />
-          </div>
-          <div class="col-md-4 form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" v-model="form.data.email" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 form-group">
-            <label>Notes</label>
-            <textarea class="form-control" v-model="form.data.notes"></textarea>
-          </div>
-        </div>
-        <template slot="footer">
-          <div class="delete-close-save">
-            <div>
-              <button class="danger" @click="deleteRecord(form.data.id)">
-                <svg
-                  viewBox="0 0 24 24"
-                  preserveAspectRatio="xMinYMin meet"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="18px"
-                  height="18px"
-                >
-                  <polyline points="3 6 5 6 21 6" />
-                  <path
-                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                  />
-                  <line x1="10" y1="11" x2="10" y2="17" />
-                  <line x1="14" y1="11" x2="14" y2="17" />
-                </svg>
-              </button>
+      <Form :formData="form.data">
+        <template v-slot:default="modelData">
+          <input type="hidden" v-model="modelData.id" />
+          <div class="row">
+            <div class="col-md-4 form-group">
+              <label>Category</label>
+              <input type="text" class="form-control" v-model="modelData.category" maxlength="64" />
             </div>
-            <div>
-              <button class="outline" @click="closeModal">Cancel</button>
-              <button class="primary" @click="saveRecord" :disabled="!form.dirty">Save</button>
+            <div class="col-md-4 form-group">
+              <label>Contact Name</label>
+              <input
+                type="text"
+                class="form-control"
+                v-model="modelData.contactPerson"
+                maxlength="128"
+              />
+            </div>
+            <div class="col-md-4 form-group">
+              <label>Position</label>
+              <input type="text" class="form-control" v-model="modelData.name" maxlength="128" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <label>Primary Phone #</label>
+              <input
+                class="form-control"
+                type="tel"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                title="Must be in format: ###-###-####"
+                maxlength="12"
+                v-model="modelData.phone"
+              />
+            </div>
+            <div class="col-md-2 form-group">
+              <label>Extension</label>
+              <input type="text" class="form-control" v-model="modelData.ext" maxlength="8" />
+            </div>
+            <div class="col-md-3 form-group">
+              <label>Secondary or Cell #</label>
+              <input
+                class="form-control"
+                type="tel"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                title="Must be in format: ###-###-####"
+                maxlength="12"
+                v-model="modelData.altPhone"
+              />
+            </div>
+            <div class="col-md-4 form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" v-model="modelData.email" maxlength="64" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <label>Notes</label>
+              <textarea class="form-control" v-model="modelData.notes" maxlength="1024"></textarea>
             </div>
           </div>
         </template>
+      </Form>
+
+      <template slot="footer">
+        <div class="delete-close-save">
+          <div>
+            <button
+              v-show="form.data.id !== null"
+              class="danger"
+              @click="deleteRecord(form.data.id)"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                preserveAspectRatio="xMinYMin meet"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="18px"
+                height="18px"
+              >
+                <polyline points="3 6 5 6 21 6" />
+                <path
+                  d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                />
+                <line x1="10" y1="11" x2="10" y2="17" />
+                <line x1="14" y1="11" x2="14" y2="17" />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <button class="outline" @click="closeModal">Cancel</button>
+            <button class="primary" @click="saveRecord" :disabled="!form.dirty">Save</button>
+          </div>
+        </div>
       </template>
     </Modal>
   </div>
@@ -112,13 +139,14 @@
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
-import List from "@/assets/components/List";
+import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
+import Form from "./ContactsForm";
 import api from "@/assets/libs/api";
 
 export default {
   name: "Contacts",
-  components: { AppHeader, List, Modal },
+  components: { AppHeader, DataTable, Modal, Form },
   data() {
     return {
       list: {
@@ -131,13 +159,15 @@ export default {
           { label: "More", width: 5 }
         ],
         groupby: "category",
-        data: null
+        data: null,
+        searchQuery: ""
       },
       modal: {
         show: false,
         title: ""
       },
       form: {
+        category: [],
         data: {},
         originalData: {},
         dirty: false
@@ -154,6 +184,19 @@ export default {
         }
       },
       deep: true
+    }
+  },
+  computed: {
+    filteredDataTable: function() {
+      var search = this.list.searchQuery.toLowerCase().trim();
+      if (!search) return this.list.data;
+      return this.list.data.filter(o =>
+        Object.keys(o).some(k => {
+          return String(o[k])
+            .toLowerCase()
+            .includes(search.toLowerCase());
+        })
+      );
     }
   },
   methods: {
@@ -179,7 +222,7 @@ export default {
       this.form.data = _.cloneDeep(record);
       this.form.originalData = _.cloneDeep(record);
     },
-    newRecord(){
+    newRecord() {
       this.form.data = {
         id: null,
         category: "",
@@ -190,7 +233,7 @@ export default {
         altPhone: "",
         email: "",
         notes: ""
-      }
+      };
       this.openModal("New Contact");
     },
     saveRecord() {
@@ -230,6 +273,9 @@ export default {
             message: "Could not delete contact"
           });
         });
+    },
+    searchRecord(query) {
+      this.list.searchQuery = query;
     },
     openModal(title) {
       this.modal.title = title;

@@ -1,10 +1,7 @@
 <template>
-  <div class="table-container">
+  <div class="data-table-container">
+    <ControlBar :newControl="newControl" :filterControl="filterControl" />
     <CircleLoader v-if="loading" />
-    <div class="control-bar">
-      <button @click="$emit('new')">+</button>
-      <input type="text" @keyup="$emit('search', searchQuery)" v-model="searchQuery" />
-    </div>
     <section v-for="(categoryGroup,index) in categorizedDataTable" :key="index">
       <h4 v-if="groupby">{{categoryGroup.category}}</h4>
       <table>
@@ -12,7 +9,7 @@
           <tr>
             <slot name="head">
               <th
-                v-for="(column,index) in header"
+                v-for="(column,index) in parsedHeader"
                 :key="index"
                 :style="{width:column.width+'%'}"
               >{{column.label}}</th>
@@ -22,7 +19,7 @@
         <tbody>
           <tr v-for="(item, index) in categoryGroup.entries" :key="index">
             <slot name="row" :item="item">
-              <td v-for="(column, index) in header" :key="index">{{item[column.key]}}</td>
+              <td v-for="(column, index) in parsedHeader" :key="index">{{item[column.key]}}</td>
             </slot>
           </tr>
         </tbody>
@@ -33,15 +30,18 @@
 
 <script>
 import CircleLoader from "@/assets/components/CircleLoader";
+import ControlBar from "@/assets/components/ControlBar";
 
 export default {
   name: "DataTable",
-  components: { CircleLoader },
+  components: { CircleLoader, ControlBar },
   props: {
-    loading: Boolean,
+    loading: { type: Boolean, default: false },
     header: Array,
     groupby: String,
-    data: Array
+    data: { type: Array, required: true },
+    newControl: String,
+    filterControl: String
   },
   data() {
     return {
@@ -51,24 +51,43 @@ export default {
   computed: {
     categorizedDataTable() {
       if (this.groupby) {
-        return _(this.data)
+        return _(this.filteredDataTable)
           .groupBy(x => x[this.groupby])
           .map((value, key) => ({ category: key, entries: value }))
           .value();
       } else {
-        return [{ category: "", entries: this.data }];
+        return [{ category: "", entries: this.filteredDataTable }];
       }
+    },
+    filteredDataTable() {
+      var search = this.searchQuery.toLowerCase().trim();
+      if (!search) return this.data;
+      return this.data.filter(o =>
+        Object.keys(o).some(k => {
+          return String(o[k])
+            .toLowerCase()
+            .includes(search.toLowerCase());
+        })
+      );
+    },
+    parsedHeader() {
+      if (this.header) return this.header;
+      return Object.keys(this.data[0]).map(n => {
+        let lbl = n.replace(/_/g, " ").toLowerCase().trim();
+        return {
+          label: lbl.charAt(0).toUpperCase() + lbl.slice(1),
+          key: n
+        };
+      });
     }
-  },
-  methods: {}
+  }
 };
 </script>
 
 <style lang="less" scoped>
-.table-container {
+.data-table-container {
   width: 100%;
-  margin: 0 auto;
-  margin-top: 30px;
+  margin: 30px auto;
   font-family: Avenir;
   font-size: 0.9em;
 }
@@ -114,6 +133,10 @@ section {
   margin-bottom: 70px;
 }
 
+section:first-of-type {
+  margin-bottom: 0;
+}
+
 h4 {
   font-size: 1.5em;
   text-transform: uppercase;
@@ -123,15 +146,6 @@ h4 {
   padding-left: 8px;
   color: #111;
   margin-left: -10px;
-}
-
-.edit-cell {
-  text-align: center;
-  cursor: pointer;
-}
-
-.edit-cell:hover > .edit-icon {
-  transform: scale(1.1, 1.1);
 }
 
 .edit-icon {

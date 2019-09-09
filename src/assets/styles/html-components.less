@@ -17,7 +17,7 @@ a:hover {
 }
 
 /* Button */
-button {
+.btn {
   border: 0;
   background-color: @blue-primary;
   color: white;
@@ -26,40 +26,41 @@ button {
   cursor: pointer;
   outline: none;
   transition: all 0.3s;
+  border:1px solid #ffffff00;
 }
 
-button:hover {
+.btn:hover {
   background-color: @blue-dark;
 }
 
-button.danger {
+.btn.danger {
   background-color: @red-primary;
 }
 
-button.danger:hover {
+.btn.danger:hover {
   background-color: @red-dark;
 }
 
-button.success {
+.btn.success {
   background-color: @green-primary;
 }
 
-button.success:hover {
+.btn.success:hover {
   background-color: @green-dark;
 }
 
-button.outline {
+.btn.outline {
   background-color: #fff;
   border: 1px solid #d9d9d9;
   color: #777;
 }
 
-button.outline:hover {
+.btn.outline:hover {
   border-color: @blue-primary;
   color: @blue-primary;
 }
 
-button:disabled {
+.btn:disabled {
   background-color: #aaa;
   opacity: 0.5;
   cursor:initial;

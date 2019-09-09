@@ -2,22 +2,20 @@
   <div class="app-container">
     <AppHeader>
       <template slot="description">
-        <div>
-          A collection of commonly used phone and email addresses sorted by category.
-          Click on the `More` arrow icon to see more contact info including cell/alternate # as well as notes.
-          This is a staff curated list, so please update any records you notice are incorrect/out
-          of date or add new contacts that you notice are missing.
-        </div>
+        A collection of commonly used phone and email addresses sorted by category.
+        Click on the `More` arrow icon to see more contact info including cell/alternate # as well as notes.
+        This is a staff curated list, so please update any records you notice are incorrect/out
+        of date or add new contacts that you notice are missing.
       </template>
     </AppHeader>
 
     <DataTable
-      :header="dataTable.header"
+      :columns="dataTable.columns"
       :loading="dataTable.loading"
       :groupby="dataTable.groupby"
       :data="dataTable.data"
       :newControl="'Create new contact'"
-      :filterControl="'Search'"
+      :searchable="true"
       @edit="editRecord"
       @new="newRecord"
     >
@@ -37,7 +35,7 @@
     </DataTable>
 
     <Modal :visible="modal.show" :title="modal.title" :size="'large'" @close="closeModal">
-      <Form :formData="form.data" @dirty="setFormStatus" @submit="saveRecord">
+      <Form :data="form.data" @dirty="setFormStatus" @submit="saveRecord">
         <template v-slot:default="formProps">
           <input type="hidden" v-model="formProps.item.id" />
           <div class="row">
@@ -45,10 +43,14 @@
               <label>Category</label>
               <input
                 type="text"
+                list="form-categories-list"
                 class="form-control"
                 v-model="formProps.item.category"
                 maxlength="64"
               />
+              <datalist id="form-categories-list">
+                <option v-for="(item, index) in form.categories" :key="index" :value="item"></option>
+              </datalist>
             </div>
             <div class="col-md-4 form-group">
               <label>Contact Name</label>
@@ -116,24 +118,7 @@
                 class="btn danger"
                 @click="deleteRecord(form.data.id)"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  preserveAspectRatio="xMinYMin meet"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="18px"
-                  height="18px"
-                >
-                  <polyline points="3 6 5 6 21 6" />
-                  <path
-                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                  />
-                  <line x1="10" y1="11" x2="10" y2="17" />
-                  <line x1="14" y1="11" x2="14" y2="17" />
-                </svg>
+                <trash-2-icon size="1.5x" />
               </button>
             </div>
             <div>
@@ -153,15 +138,16 @@ import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
 import Form from "@/assets/components/Form";
 import api from "@/assets/libs/api";
+import { Trash2Icon } from "vue-feather-icons";
 
 export default {
   name: "Contacts",
-  components: { AppHeader, DataTable, Modal, Form },
+  components: { AppHeader, DataTable, Modal, Form, Trash2Icon },
   data() {
     return {
       dataTable: {
         loading: true,
-        header: [
+        columns: [
           { label: "Position", width: 20 },
           { label: "Contact Person", width: 30 },
           { label: "Phone", width: 20 },
@@ -176,7 +162,7 @@ export default {
         title: ""
       },
       form: {
-        category: [],
+        categories: [],
         data: {},
         dirty: false
       }
@@ -189,6 +175,10 @@ export default {
         .get("contacts/get-list")
         .then(data => {
           this.dataTable.data = data;
+          this.form.categories = [
+            ...new Set(this.dataTable.data.map(item => item.category))
+          ];
+          this.dataTable.loading = false;
         })
         .catch(err => {
           console.log(err);
@@ -197,15 +187,14 @@ export default {
             message: "Could not retrieve contacts from database"
           });
         });
-      this.dataTable.loading = false;
     },
     editRecord(id) {
       let record = this.dataTable.data.filter(n => n.id === id)[0];
       this.openModal("Edit Contact Info");
-      this.form.data = _.cloneDeep(record);
-      this.form.originalData = _.cloneDeep(record);
+      this.form.data = record;
     },
     newRecord() {
+      this.openModal("New Contact");
       this.form.data = {
         id: null,
         category: "",
@@ -217,7 +206,6 @@ export default {
         email: "",
         notes: ""
       };
-      this.openModal("New Contact");
     },
     saveRecord(record) {
       api
@@ -266,6 +254,7 @@ export default {
     },
     closeModal() {
       this.modal.show = false;
+      this.form.data = {};
     },
     setFormStatus(val) {
       this.form.dirty = val;

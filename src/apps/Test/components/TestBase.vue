@@ -19,8 +19,8 @@ import VRuntimeTemplate from "v-runtime-template";
 
 export default {
   name: "TestBase",
-  components: { VRuntimeTemplate },
-  props: {examples: Array}
+  components: { VRuntimeTemplate, component },
+  props: {examples: Array, component: Object, componentName: String}
 };
 </script>
 

@@ -2,7 +2,7 @@
   <div class="data-table-container">
     <SearchBar
       :newControl="newControl"
-      :filterControl="filterControl"
+      :searchable="searchable"
       @filter="updateFilter"
       @new="$emit('new')"
     />
@@ -15,7 +15,7 @@
           <tr>
             <slot name="head">
               <th
-                v-for="(column,index) in parsedHeader"
+                v-for="(column,index) in parsedColumns"
                 :key="index"
                 :style="{width:column.width+'%'}"
               >{{column.label}}</th>
@@ -25,7 +25,7 @@
         <tbody>
           <tr v-for="(item, index) in categoryGroup.entries" :key="index">
             <slot name="row" :item="item">
-              <td v-for="(column, index) in parsedHeader" :key="index">{{item[column.key]}}</td>
+              <td v-for="(column, index) in parsedColumns" :key="index">{{item[column.key]}}</td>
             </slot>
           </tr>
         </tbody>
@@ -43,11 +43,13 @@ export default {
   components: { CircleLoader, SearchBar },
   props: {
     loading: { type: Boolean, default: false },
-    header: Array,
+    columns: Array,
     groupby: String,
     data: { type: Array, required: true },
     newControl: String,
-    filterControl: String
+    searchable: {type: Boolean, default: false},
+    searchableAjax: {type: Boolean, default: false},
+    paginate : {type: Boolean, default: false},
   },
   data() {
     return {
@@ -55,6 +57,7 @@ export default {
     };
   },
   computed: {
+    //Return an array of arrays grouped by a specific key
     categorizedDataTable() {
       if (this.groupby) {
         return _(this.filteredDataTable)
@@ -65,9 +68,10 @@ export default {
         return [{ category: "", entries: this.filteredDataTable }];
       }
     },
+    //Return an array of objects that contain a search query
     filteredDataTable() {
       var search = this.searchQuery.toLowerCase().trim();
-      if (!search) return this.data;
+      if (!search || this.searchableAjax) return this.data;
       return this.data.filter(o =>
         Object.keys(o).some(k => {
           return String(o[k])
@@ -76,8 +80,9 @@ export default {
         })
       );
     },
-    parsedHeader() {
-      if (this.header) return this.header;
+    //Return a well formed columns array if none was passed in
+    parsedColumns() {
+      if (this.columns) return this.columns;
       return Object.keys(this.data[0]).map(n => {
         let lbl = n
           .replace(/_/g, " ")
@@ -162,9 +167,4 @@ h4 {
   margin-left: -10px;
 }
 
-.edit-icon {
-  max-width: 20px;
-  transition: transform 0.3s;
-  transform: scale(1, 1);
-}
 </style>

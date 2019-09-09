@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "Form",
-  props: { formData: Object },
+  props: { data: Object },
   data() {
     return {
       originalData: {},
@@ -25,10 +25,10 @@ export default {
       },
       deep: true
     },
-    formData: {
+    data: {
       handler() {
-        this.modelData = _.cloneDeep(this.formData);
-        this.originalData = _.cloneDeep(this.formData);
+        this.modelData = _.cloneDeep(this.data);
+        this.originalData = _.cloneDeep(this.data);
       },
       deep: true
     }

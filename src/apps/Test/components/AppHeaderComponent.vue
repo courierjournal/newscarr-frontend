@@ -1,5 +1,5 @@
 <template>
-  <TestBase :examples="examples" />
+  <TestBase :examples="examples" :component="AppHeader" :componentName="'AppHeader'" />
 </template>
 
 <script>

@@ -1,7 +1,13 @@
 <template>
   <div class="data-table-container">
-    <ControlBar :newControl="newControl" :filterControl="filterControl" />
+    <SearchBar
+      :newControl="newControl"
+      :filterControl="filterControl"
+      @filter="updateFilter"
+      @new="$emit('new')"
+    />
     <CircleLoader v-if="loading" />
+
     <section v-for="(categoryGroup,index) in categorizedDataTable" :key="index">
       <h4 v-if="groupby">{{categoryGroup.category}}</h4>
       <table>
@@ -30,11 +36,11 @@
 
 <script>
 import CircleLoader from "@/assets/components/CircleLoader";
-import ControlBar from "@/assets/components/ControlBar";
+import SearchBar from "@/assets/components/SearchBar";
 
 export default {
   name: "DataTable",
-  components: { CircleLoader, ControlBar },
+  components: { CircleLoader, SearchBar },
   props: {
     loading: { type: Boolean, default: false },
     header: Array,
@@ -73,12 +79,20 @@ export default {
     parsedHeader() {
       if (this.header) return this.header;
       return Object.keys(this.data[0]).map(n => {
-        let lbl = n.replace(/_/g, " ").toLowerCase().trim();
+        let lbl = n
+          .replace(/_/g, " ")
+          .toLowerCase()
+          .trim();
         return {
           label: lbl.charAt(0).toUpperCase() + lbl.slice(1),
           key: n
         };
       });
+    }
+  },
+  methods: {
+    updateFilter(query) {
+      this.searchQuery = query;
     }
   }
 };

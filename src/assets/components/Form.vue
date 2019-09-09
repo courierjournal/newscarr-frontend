@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="$emit('submit', formData)">
-    <slot name="default"></slot>
+  <form @submit.prevent="$emit('submit', modelData)">
+    <slot name="default" :item="modelData"></slot>
   </form>
 </template>
 
@@ -27,8 +27,8 @@ export default {
     },
     formData: {
       handler() {
-        this.modelData = _.cloneDeep(formData);
-        this.originalData = _.cloneDeep(formData);
+        this.modelData = _.cloneDeep(this.formData);
+        this.originalData = _.cloneDeep(this.formData);
       },
       deep: true
     }

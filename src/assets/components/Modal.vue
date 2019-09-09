@@ -15,12 +15,12 @@
           <div class="modal-body">
             <slot></slot>
           </div>
-
+          <!--
           <div class="modal-footer">
             <slot name="footer">
               <button class="btn modal-default-button" @click="$emit('close')">OK</button>
             </slot>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -31,13 +31,12 @@
 export default {
   name: "Modal",
   props: { visible: Boolean, title: String, size: String },
-  components: {},
   watch: {
     visible: function() {
       if (this.visible) {
-        document.querySelector("body").classDataTable.add("modal-active");
+        document.querySelector("body").classList.add("modal-active");
       } else {
-        document.querySelector("body").classDataTable.remove("modal-active");
+        document.querySelector("body").classList.remove("modal-active");
       }
     }
   }
@@ -83,7 +82,7 @@ export default {
 
 .modal-body {
   padding: 24px;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .modal-footer {

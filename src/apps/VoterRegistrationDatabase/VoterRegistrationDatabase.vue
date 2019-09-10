@@ -1,14 +1,40 @@
 <template>
   <div class="app-container">
-    <AppHeader :title="header.title" :description="header.description" />
+    <AppHeader>
+      <template slot="description">
+        A collection of commonly used phone and email addresses sorted by category.
+        Click on the `More` arrow icon to see more contact info including cell/alternate # as well as notes.
+        This is a staff curated list, so please update any records you notice are incorrect/out
+        of date or add new contacts that you notice are missing.
+      </template>
+    </AppHeader>
     <VoterSearch @search="search" />
+
     <DataTable
       v-if="searchInitiated"
-      :header="list.header"
-      :groupby="list.groupby"
-      :data="list.data"
+      :columns="dataTable.columns"
+      :loading="dataTable.loading"
+      :data="dataTable.data"
       @edit="editRecord"
-    />
+    >
+      <template v-slot:row="rowProps">
+        <td>{{rowProps.item.name}}</td>
+        <td>{{rowProps.item.party}}</td>
+        <td>{{rowProps.item.gender}}</td>
+
+        <td>{{rowProps.item.dob}}</td>
+        <td>
+          {{rowProps.item.phone}}
+          <span v-if="rowProps.item.ext">x{{rowProps.item.ext}}</span>
+          <span v-if="!rowProps.item.phone && rowProps.item.altPhone">(c) {{rowProps.item.altPhone}}</span>
+        </td>
+        <td>
+          <a :href="`mailto:${rowProps.item.email}`">{{rowProps.item.email}}</a>
+        </td>
+        <td @click="editRecord(rowProps.item.id)" class="icon-more"></td>
+      </template>
+    </DataTable>
+
     <Modal v-if="modal.show" :title="modal.title" @close="closeModal">
       <p>Modal Data Goes Here</p>
       <p>Debug:</p>
@@ -19,6 +45,7 @@
 
 <script>
 import AppHeader from "@/assets/components/AppHeader";
+import Form from "@/assets/components/Form";
 import VoterSearch from "./VoterSearch";
 import DataTable from "@/assets/components/DataTable";
 import Modal from "@/assets/components/Modal";
@@ -29,19 +56,15 @@ export default {
   components: { AppHeader, VoterSearch, DataTable, Modal },
   data() {
     return {
-      header: {
-        title: "Voter Registration Database",
-        description:
-          "Searchable database for voter registration in Kentucky. You can search by any of the fields below to do a fuzzy lookup (ex: a first name search of \"ben\" will return names like Ben, Benny, Benjamin, Ruben, Alben, etc...). Selecting \"exact match\" will return results that match the fields exactly. Clicking on a row will reveal more information about that person. Searches are limited to 100 matches. Database provided by KY SoS, last updated March 2017."
-      },
-      list: {
+      dataTable: {
         header: [
-          { label: "Name", width: 25, key: "name" },
-          { label: "Party", width: 30, key: "contactPerson" },
-          { label: "Gender", width: 20, key: "phone" },
-          { label: "Address", width: 25, key: "email" }
+          { label: "Name", width: 25 },
+          { label: "Party", width: 30 },
+          { label: "Gender", width: 20 },
+          { label: "Address", width: 25 },
+          { label: "DOB", width: 25 },
+          { lable: "More", width: 5 }
         ],
-        groupby: "category",
         data: null
       },
       modal: { show: false },

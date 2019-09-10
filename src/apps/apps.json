@@ -16,22 +16,15 @@
   {
     "title": "Bookmarks",
     "path": "/bookmarks",
-    "component": "Bookmarks/index.vue",
-    "description": "A list of frequently used websites",
+    "component": "Bookmarks/Bookmarks.vue",
+    "description": "A list of frequently used websites.",
     "icon": "bookmarks.png"
   },
   {
-    "title": "Photo Budget",
-    "path": "/photo-budget",
-    "component": "PhotoBudget/PhotoBudget.vue",
-    "description": "Budgeting tool for the photo team. If you're a reporter looking to put in a request, click 'New Request' in the corner.",
-    "icon": "camera.png"
-  },
-  {
-    "title": "Gun Violence Database",
-    "path": "/gun-violence-database",
-    "component": "GunViolenceDatabase/index.vue",
-    "description": "Admin panel for the gun violence database",
-    "icon": "gunshot.png"
+    "title": "Voter Registration Database",
+    "path": "/voter-registration-database",
+    "component": "VoterRegistrationDatabase/VoterRegistrationDatabase.vue",
+    "description": "List of voter registration",
+    "icon": "voter.png"
   }
 ]

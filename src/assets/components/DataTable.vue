@@ -152,7 +152,7 @@ section {
   margin-bottom: 70px;
 }
 
-section:first-of-type {
+section:last-of-type {
   margin-bottom: 0;
 }
 

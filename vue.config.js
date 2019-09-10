@@ -1,11 +1,4 @@
 module.exports = {
   productionSourceMap: false,
-  runtimeCompiler: true,
-  css: {
-    loaderOptions: {
-      less: {
-        
-      }
-    }
-  }
+  runtimeCompiler: process.env.NODE_ENV === "production" ? false : true
 };
